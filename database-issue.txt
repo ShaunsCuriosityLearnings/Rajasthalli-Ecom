@@ -1,0 +1,113 @@
+DATABASE PRODUCT ID MISMATCH ISSUE (Checkout Security Flow)
+============================================================
+
+STATUS / ISSUE:
+During checkout, the browser console/network logs report "Product ID 1 not found in catalog".
+
+WHY IT OCCURS:
+1. The client storefront UI (apps/client/src/components/ProductList.tsx) currently uses a list of hardcoded, static mock products with IDs 1 to 10.
+2. The checkout flow implements a security check on the backend (apps/payment-service/src/controllers/payment.controller.ts) which fetches products from the PostgreSQL database using Prisma (prisma.product.findMany) to verify their price and prevent client-side price tampering.
+3. Because the local PostgreSQL database is empty or does not have products matching IDs 1 to 10, the query returns an empty result, triggering the security check block.
+
+PROPOSED RESOLUTION FOR FUTURE:
+1. Populate/Seed the PostgreSQL database with the matching product details and specify their IDs as 1 through 10.
+2. A seeder script "seed.js" can be executed using Prisma in the payment-service to create these mock products, categories, and image mappings.
+3. Alternatively, connect the frontend storefront UI (ProductList.tsx) to query products from the database API rather than using static/temporary data.
+
+
+import { z } from "zod";
+
+export type ProductImagesType = {
+  frontView: string;
+  sideView: string;
+  backView: string;
+};
+
+export type ProductType = {
+  id: number;
+  name: string;
+  shortDescription: string;
+  description: string;
+  price: number;
+  sizes: [string, ...string[]];
+  images: ProductImagesType;
+};
+
+export type ProductsType = ProductType[];
+
+export type CartItemType = ProductType & {
+  quantity: number;
+  selectedSize: string;
+};
+
+export type CartItemsType = CartItemType[];
+
+export const shippingFormSchema = z.object({
+  name: z.string().min(1, "Name is required!"),
+
+  email: z.string().email("Invalid email address"),
+
+  phone: z
+    .string()
+    .min(10, "Phone number must be 10 digits!")
+    .max(10, "Phone number must be 10 digits!")
+    .regex(/^\d+$/, "Phone number must contain only numbers!"),
+
+  address: z.string().min(1, "Address is required!"),
+
+  city: z.string().min(1, "City is required!"),
+
+  state: z.string().min(1, "State is required!"),
+
+  pincode: z
+    .string()
+    .length(6, "Pincode must be 6 digits!")
+    .regex(/^\d+$/, "Pincode must contain only numbers!"),
+});
+
+export type ShippingFormInputs = z.infer<typeof shippingFormSchema>;
+
+export const PaymentFormSchema = z.object({
+  paymentMethod: z.enum(["online", "cod"], {
+    message: "Please select a payment method!",
+  }),
+  cardHolderName: z.string().optional(),
+  cardNumber: z.string().optional(),
+  expiryMonth: z.string().optional(),
+  expiryYear: z.string().optional(),
+  cvv: z.string().optional(),
+});
+
+export type PaymentFormInputs = z.infer<typeof PaymentFormSchema>;
+
+
+
+export type CartStoreStateType = {
+  cart: CartItemsType;
+  hasHydrated: boolean;
+};
+
+export type CartStoreActionsType = {
+  addToCart: (product: CartItemType) => void;
+  removeFromCart: (product: CartItemType) => void;
+  clearCart: () => void;
+};
+
+
+ALSO ADDED AN SEEDJS WHICH SHOULD BE REMOVED
+
+SOMEHOWW MAKING THE PAYMENT WORK SOO MAKING THE AI TRYY
+fastify.post(
+    "/orders",
+    async (request, reply) => {
+      const apiKey = request.headers["x-internal-api-key"];
+
+      if (!apiKey || apiKey !== process.env.INTERNAL_API_KEY) {
+        return reply.status(403).send({
+          success: false,
+          message: "Unauthorized - Invalid internal API key",
+        });
+      }
+
+      const { products, amount, email, userId } = request.body as any;
+

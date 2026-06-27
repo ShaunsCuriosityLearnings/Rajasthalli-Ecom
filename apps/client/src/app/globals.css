@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-green: #16301d;
+  --color-primary-green-hover: #234c2f;
+  --color-accent-gold: #c89b3c;
+  --color-accent-gold-hover: #b3852d;
+  --color-accent-brown: #5c3d24;
+  --color-accent-brown-hover: #472f1a;
+  --color-heritage-maroon: #7d1f1f;
+  --color-heritage-maroon-hover: #631818;
+  --color-bg-cream: #faf7f2;
+}
+
+:root {
+  --background: #faf7f2;
+  --foreground: #2b2b2b;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+.hero-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.heritage-border {
+  border-color: #c89b3c;
+}
+
+.heritage-gold {
+  color: #c89b3c;
+}
+
+.heritage-maroon {
+  color: #7d1f1f;
+}
+
+.heritage-bg {
+  background-color: #faf7f2;
+}
+

@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model MainCategory {
+  id         Int        @id @default(autoincrement())
+  name       String
+  slug       String     @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  categories Category[]
+}
+
+model Category {
+  id             Int           @id @default(autoincrement())
+  name           String
+  slug           String        @unique
+  mainCategoryId Int?
+  mainCategory   MainCategory? @relation(fields: [mainCategoryId], references: [id])
+
+  products       Product[]
+}
+
+model Product {
+  id               Int            @id @default(autoincrement())
+  name             String
+  shortDescription String
+  description      String
+  price            Decimal        @db.Decimal(10, 2)
+  sizes            String[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  categorySlug     String
+  category         Category       @relation(fields: [categorySlug], references: [slug])
+
+  images           ProductImages?
+}
+
+model ProductImages {
+  id        Int     @id @default(autoincrement())
+  frontView String
+  sideView  String
+  backView  String
+  productId Int     @unique
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model HeroSlide {
+  id             Int      @id @default(autoincrement())
+  tag            String
+  title          String
+  subtitle       String
+  offer          String
+  buttonText     String
+  buttonLink     String
+  mainImage      String
+  secondaryImage String
+  thirdImage     String?
+  floatingText   String
+  floatingValue  String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+

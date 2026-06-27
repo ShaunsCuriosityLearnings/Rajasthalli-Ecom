@@ -1,0 +1,35 @@
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import type { NextFetchEvent, NextRequest } from 'next/server'
+import { CustomJwtSessionClaims } from '@repo/types'
+
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/unauthorized(.*)'])
+
+const clerk = clerkMiddleware(async (auth, req) => {
+    if (!isPublicRoute(req)) {
+        await auth.protect()
+
+        const { userId, sessionClaims } = await auth()
+        if (userId && sessionClaims) {
+            const userRole = (sessionClaims as CustomJwtSessionClaims).metadata?.role;
+            if (userRole !== "admin") {
+                return NextResponse.redirect(new URL("/unauthorized", req.url));
+            }
+        }
+    }
+})
+
+export default function middleware(request: NextRequest, event: NextFetchEvent) {
+    return clerk(request, event)
+}
+
+export const config = {
+    matcher: [
+        // Skip Next.js internals and all static files, unless found in search params
+        '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+        // Always run for API routes
+        '/(api|trpc)(.*)',
+        // Always run for Clerk-specific frontend API routes
+        '/__clerk/(.*)',
+    ],
+}
