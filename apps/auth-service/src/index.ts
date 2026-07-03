@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: ["http://localhost:3003"],
+        origin: ["http://localhost:3002", "http://localhost:3003", "https://beta.rajasthalii.com", "https://admin.rajasthalii.com"],
         credentials: true,
     })
 );

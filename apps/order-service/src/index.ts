@@ -7,7 +7,7 @@ import { orderRoute } from "./routes/order.js";
 const fastify = Fastify();
 
 fastify.register(cors, {
-  origin: ["http://localhost:3002", "http://localhost:3003"],
+  origin: ["http://localhost:3002", "http://localhost:3003", "https://beta.rajasthalii.com", "https://admin.rajasthalii.com"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
