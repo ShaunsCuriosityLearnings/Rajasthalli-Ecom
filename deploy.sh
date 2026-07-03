@@ -14,23 +14,23 @@ git pull origin main
 echo "📦 Installing npm dependencies..."
 npm install
 
-# 3. Build all TS packages & microservices
-echo "🏗️ Building applications..."
-npm run build
-
-# 4. Restart services in PM2
+# 3. Restart services in PM2 using tsx directly
 echo "🔄 Restarting PM2 processes..."
+
 # Check if any PM2 process is running, restart if yes, otherwise start them
 if pm2 list | grep -q "product-service"; then
     echo "PM2 processes found. Restarting..."
     pm2 restart all
 else
     echo "PM2 processes not found. Launching services..."
-    pm2 start dist/apps/product-service/src/index.js --name "product-service"
-    pm2 start dist/apps/order-service/src/index.js --name "order-service"
-    pm2 start dist/apps/payment-service/src/index.js --name "payment-service"
-    pm2 start dist/apps/auth-service/src/index.js --name "auth-service"
-    pm2 start dist/apps/email-service/src/index.js --name "email-service"
+    
+    # Start all 5 backend APIs using npx tsx directly from the root
+    pm2 start npx --name "product-service" --cwd "apps/product-service" -- tsx --env-file=.env src/index.ts
+    pm2 start npx --name "order-service" --cwd "apps/order-service" -- tsx --env-file=.env src/index.ts
+    pm2 start npx --name "payment-service" --cwd "apps/payment-service" -- tsx --env-file=.env src/index.ts
+    pm2 start npx --name "auth-service" --cwd "apps/auth-service" -- tsx --env-file=.env src/index.ts
+    pm2 start npx --name "email-service" --cwd "apps/email-service" -- tsx --env-file=.env src/index.ts
+    
     pm2 startup
     pm2 save
 fi
