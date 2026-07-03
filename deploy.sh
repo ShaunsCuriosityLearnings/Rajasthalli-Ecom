@@ -14,7 +14,11 @@ git pull origin main
 echo "📦 Installing npm dependencies..."
 npm install
 
-# 3. Restart services in PM2 using standard npm run start scripts
+# 3. Build all applications (both microservices & Next.js frontends)
+echo "🏗️ Building all applications..."
+npm run build
+
+# 4. Restart services in PM2
 echo "🔄 Restarting PM2 processes..."
 
 # Check if any PM2 process is running, restart if yes, otherwise start them
@@ -24,12 +28,16 @@ if pm2 list | grep -q "product-service"; then
 else
     echo "PM2 processes not found. Launching services..."
     
-    # Start all 5 backend APIs using their npm run start commands
+    # Start all 5 backend APIs
     pm2 start npm --name "product-service" --cwd "apps/product-service" -- run start
     pm2 start npm --name "order-service" --cwd "apps/order-service" -- run start
     pm2 start npm --name "payment-service" --cwd "apps/payment-service" -- run start
     pm2 start npm --name "auth-service" --cwd "apps/auth-service" -- run start
     pm2 start npm --name "email-service" --cwd "apps/email-service" -- run start
+    
+    # Start the 2 Next.js frontend applications
+    pm2 start npm --name "client-front" --cwd "apps/client" -- run start
+    pm2 start npm --name "admin-front" --cwd "apps/admin" -- run start
     
     pm2 startup
     pm2 save
