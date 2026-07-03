@@ -7,6 +7,7 @@ const ORDER_SERVICE_URL = process.env.ORDER_SERVICE_URL || "http://localhost:800
 const EMAIL_SERVICE_URL = process.env.EMAIL_SERVICE_URL || "http://localhost:8005";
 const PRODUCT_SERVICE_URL = process.env.PRODUCT_SERVICE_URL || "http://localhost:8000";
 const INTERNAL_API_KEY = process.env.INTERNAL_API_KEY || "my_secure_secret_key_123";
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3002";
 
 // Create Checkout Order & Session
 export const createPaymentSession = async (c: Context) => {
@@ -80,7 +81,7 @@ export const createPaymentSession = async (c: Context) => {
       },
       order_meta: {
         // Callback redirect URL to verify checkout
-        return_url: `http://localhost:3002/orders/status?order_id=${orderId}`,
+        return_url: `${CLIENT_URL}/orders/status?order_id=${orderId}`,
       },
     };
 
