@@ -42,28 +42,55 @@ import { Checkbox } from "./ui/checkbox";
 import { ScrollArea } from "./ui/scroll-area";
 
 const sizes = [
-  "xs",
-  "s",
-  "m",
-  "l",
-  "xl",
-  "xxl",
-  "34",
-  "35",
-  "36",
-  "37",
-  "38",
-  "39",
-  "40",
-  "41",
-  "42",
-  "43",
-  "44",
-  "45",
-  "46",
-  "47",
-  "48",
+  "xs", "s", "m", "l", "xl", "xxl", "3xl",
+  "28", "30", "32", "34", "36", "38", "40", "41", "42", "43", "44", "45", "46", "47", "48",
+  "Single Bed (60\" x 90\")",
+  "Double Bed (90\" x 100\")",
+  "Queen Size (90\" x 108\")",
+  "King Size (108\" x 108\")",
+  "Bath Towel (30\" x 60\")",
+  "Hand Towel (16\" x 28\")",
+  "Face Towel (12\" x 12\")",
+  "Pack of 1", "Pack of 2", "Pack of 3", "Pack of 4", "Pack of 6", "Pack of 8", "Pack of 12",
+  "50 ml", "80 ml", "100 ml", "200 ml", "250 ml", "500 ml", "1 Litre", "2 Litres",
+  "Free Size", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
 ] as const;
+
+const sizeCategories = [
+  {
+    name: "Apparel (Alpha Sizes)",
+    options: ["xs", "s", "m", "l", "xl", "xxl", "3xl"]
+  },
+  {
+    name: "Apparel / Footwear (Numeric)",
+    options: ["28", "30", "32", "34", "36", "38", "40", "41", "42", "43", "44", "45", "46", "47", "48"]
+  },
+  {
+    name: "Bedsheets & Towels (Dimensions)",
+    options: [
+      "Single Bed (60\" x 90\")",
+      "Double Bed (90\" x 100\")",
+      "Queen Size (90\" x 108\")",
+      "King Size (108\" x 108\")",
+      "Bath Towel (30\" x 60\")",
+      "Hand Towel (16\" x 28\")",
+      "Face Towel (12\" x 12\")",
+    ]
+  },
+  {
+    name: "Pack Sizes",
+    options: ["Pack of 1", "Pack of 2", "Pack of 3", "Pack of 4", "Pack of 6", "Pack of 8", "Pack of 12"]
+  },
+  {
+    name: "Volume / Liquids",
+    options: ["50 ml", "80 ml", "100 ml", "200 ml", "250 ml", "500 ml", "1 Litre", "2 Litres"]
+  },
+  {
+    name: "Other / Footwear (US/UK)",
+    options: ["Free Size", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  }
+];
+
 
 interface EditProductProps {
   product: ProductType;
@@ -73,6 +100,7 @@ const EditProduct = ({ product }: EditProductProps) => {
   const router = useRouter();
   const { getToken } = useAuth();
   const [mainCategories, setMainCategories] = useState<MainCategoryType[]>([]);
+  const [customSize, setCustomSize] = useState("");
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -362,33 +390,110 @@ const EditProduct = ({ product }: EditProductProps) => {
               control={form.control}
               name="sizes"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Available Sizes</FormLabel>
+                <FormItem className="space-y-4">
+                  <FormLabel className="text-base font-semibold text-zinc-900 dark:text-zinc-50">Available Sizes / Options</FormLabel>
                   <FormControl>
-                    <div className="grid grid-cols-4 gap-3">
-                      {sizes.map((size) => (
-                        <div key={size} className="flex items-center gap-2">
-                          <Checkbox
-                            checked={field.value?.includes(size)}
-                            onCheckedChange={(checked) => {
-                              if (checked) {
-                                field.onChange([...(field.value || []), size]);
-                              } else {
-                                field.onChange(
-                                  field.value?.filter((s) => s !== size),
-                                );
-                              }
-                            }}
-                          />
-                          <span className="text-xs uppercase">{size}</span>
+                    <div className="space-y-4">
+                      {sizeCategories.map((category) => (
+                        <div key={category.name} className="space-y-2 border border-zinc-100 dark:border-zinc-800 p-3 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/30">
+                          <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                            {category.name}
+                          </h4>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                            {category.options.map((option) => (
+                              <div key={option} className="flex items-center gap-2">
+                                <Checkbox
+                                  checked={field.value?.includes(option)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      field.onChange([...(field.value || []), option]);
+                                    } else {
+                                      field.onChange(
+                                        field.value?.filter((s) => s !== option)
+                                      );
+                                    }
+                                  }}
+                                />
+                                <span className="text-xs uppercase font-medium">{option}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       ))}
+
+                      {/* Render custom sizes if they exist and are selected */}
+                      {field.value?.some((s) => !sizes.includes(s as any)) && (
+                        <div className="space-y-2 border border-zinc-100 dark:border-zinc-800 p-3 rounded-lg bg-zinc-50/50 dark:bg-zinc-900/30">
+                          <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                            Custom Sizes
+                          </h4>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                            {field.value
+                              ?.filter((s) => !sizes.includes(s as any))
+                              .map((customOpt) => (
+                                <div key={customOpt} className="flex items-center gap-2">
+                                  <Checkbox
+                                    checked={true}
+                                    onCheckedChange={(checked) => {
+                                      if (!checked) {
+                                        field.onChange(
+                                          field.value?.filter((s) => s !== customOpt)
+                                        );
+                                      }
+                                    }}
+                                  />
+                                  <span className="text-xs font-medium">{customOpt}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Custom Size Input */}
+                      <div className="flex gap-2 items-center">
+                        <Input
+                          placeholder="e.g. 5 Litres, Pack of 24, 70 x 120 in"
+                          value={customSize}
+                          onChange={(e) => setCustomSize(e.target.value)}
+                          className="max-w-xs h-9 text-xs"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              if (customSize.trim()) {
+                                const newOption = customSize.trim();
+                                if (!field.value?.includes(newOption)) {
+                                  field.onChange([...(field.value || []), newOption]);
+                                }
+                                setCustomSize("");
+                              }
+                            }
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-9 px-3 text-xs"
+                          onClick={() => {
+                            if (customSize.trim()) {
+                              const newOption = customSize.trim();
+                              if (!field.value?.includes(newOption)) {
+                                field.onChange([...(field.value || []), newOption]);
+                              }
+                              setCustomSize("");
+                            }
+                          }}
+                        >
+                          Add Custom
+                        </Button>
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
 
             <div className="space-y-4">
               <h3 className="font-medium">Product Images</h3>

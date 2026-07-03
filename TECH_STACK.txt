@@ -1,0 +1,120 @@
+RAJASTHALI E-COMMERCE - TECH STACK DOCUMENTATION
+===============================================
+
+This document details the complete technology stack, port allocations, event flows, and database configurations for the Rajasthalli-Ecom monorepo.
+
+--------------------------------------------------------------------------------
+1. MONOREPO ORCHESTRATION & TOOLING
+--------------------------------------------------------------------------------
+* Monorepo Orchestration: Turborepo v2.9+ (turbo.json)
+* Package Manager: npm Workspaces (v11+)
+* Language: TypeScript (v5.9.2)
+* Configurations: Shared ESLint (@repo/eslint-config) and TypeScript config (@repo/typescript-config)
+* Code Formatting: Prettier
+
+--------------------------------------------------------------------------------
+2. FRONTEND APPLICATIONS (apps/)
+--------------------------------------------------------------------------------
+
+Client Storefront (apps/client)
+- Port: 3002 (Next.js Turbopack mode)
+- Framework: Next.js 15.4.5 (React 19)
+- Styling: Tailwind CSS v4, Lucide React
+- State Management: Zustand (v5.0.14)
+- Authentication: Clerk (@clerk/nextjs, @clerk/themes)
+- Form Handling: React Hook Form + Zod validation
+- Payment Integration: Cashfree JS SDK (@cashfreepayments/cashfree-js v1.0.7)
+- Notifications: React-Toastify
+
+Admin Dashboard (apps/admin)
+- Port: 3003 (Next.js Turbopack mode)
+- Framework: Next.js 15.4.5 (React 19)
+- Styling: Tailwind CSS v4, Radix UI Primitives, Lucide React
+- Data Fetching & Caching: TanStack React Query (@tanstack/react-query v5.101.1)
+- Tables: TanStack Table (@tanstack/react-table v8.21.3)
+- Authentication: Clerk (@clerk/nextjs v7.5.8)
+- Form Handling: React Hook Form + Zod (@hookform/resolvers)
+- Charts & Visualization: Recharts (v2.15.2)
+- Date Utilities: date-fns, react-day-picker
+- Image Uploads: Next Cloudinary (next-cloudinary v6.17.5)
+
+--------------------------------------------------------------------------------
+3. BACKEND MICROSERVICES (apps/)
+--------------------------------------------------------------------------------
+All backend services run via tsx in watch mode with native environment variable loading (--env-file=.env).
+
+* Product Service (apps/product-service)
+  - Port: 8000
+  - Framework: Express (v5.2.1)
+  - Database: PostgreSQL (Prisma ORM via @repo/productdb)
+  - Auth: Clerk Express SDK (@clerk/express)
+  - Async Communication: Subscribes to payment.processed Kafka topic
+
+* Order Service (apps/order-service)
+  - Port: 8001
+  - Framework: Fastify (v5.8.5)
+  - Database: MongoDB (Mongoose via @repo/orderdb)
+  - Auth: Clerk Fastify SDK (@clerk/fastify)
+  - Async Communication: Subscribes to payment.processed Kafka topic
+
+* Payment Service (apps/payment-service)
+  - Port: 8002
+  - Framework: Hono (v4.12.24) running on @hono/node-server
+  - Database: Connects to Order database (@repo/orderdb)
+  - Payments: Cashfree PG Node SDK (cashfree-pg v6.0.4)
+  - Auth: Clerk Hono SDK (@hono/clerk-auth)
+  - Async Communication: Publishes payment.processed events to Kafka
+
+* Auth Service (apps/auth-service)
+  - Port: 8004
+  - Framework: Express (v5.2.1)
+  - Auth: Clerk Express SDK (@clerk/express)
+  - Database: Product database connection
+
+* Email Service (apps/email-service)
+  - Port: 8005
+  - Framework: Express (v5.2.1)
+  - Database: MongoDB Order connection (@repo/orderdb)
+  - Mail Delivery: Nodemailer (v6.9.16)
+  - Async Communication: Subscribes to payment.processed and order.status.updated Kafka topics
+
+--------------------------------------------------------------------------------
+4. SHARED PACKAGES (packages/)
+--------------------------------------------------------------------------------
+* @repo/kafka
+  - Kafka broker client wrap using kafkajs (v2.2.4).
+  - Handles unified consumer and producer setups across all microservices.
+
+* @repo/orderdb
+  - Models, connections, and schemas for MongoDB using Mongoose (v9.7.0).
+
+* @repo/productdb
+  - Models, schemas, seeds, and migrations for PostgreSQL using Prisma ORM (v7.8.0) and pg client (v8.18.0).
+
+* @repo/types
+  - Centralized TypeScript definitions and Zod request validation schemas.
+
+--------------------------------------------------------------------------------
+5. LOGISTICAL & EVENT FLOW (KAFKA PUB/SUB)
+--------------------------------------------------------------------------------
+* Topic: payment.processed
+  - Producer: payment-service (upon Cashfree transaction validation)
+  - Consumers:
+    - order-service: Updates order status to "success"/"failed" in MongoDB.
+    - email-service: Sends confirmation email to the buyer via Nodemailer.
+    - product-service: Logs checkout details for potential inventory adjustments.
+
+* Topic: order.status.updated
+  - Producer: admin-dashboard / order-service (status adjustments like packed, delivered)
+  - Consumer:
+    - email-service: Sends status update updates to buyer's email.
+
+--------------------------------------------------------------------------------
+6. DATA STORAGE & INFRASTRUCTURE
+--------------------------------------------------------------------------------
+* PostgreSQL: Holds main categories, categories, product catalogues, and hero banners.
+* MongoDB: Holds user orders, line items, and shipping addresses.
+* Apache Kafka: Message broker cluster listening on ports 9094, 9095, and 9096.
+* Clerk: Unified authentication provider for client, admin, and backend APIs.
+* Cashfree: Handles checkout session creations and payment redirects.
+* Cloudinary: Serves as media asset delivery system.

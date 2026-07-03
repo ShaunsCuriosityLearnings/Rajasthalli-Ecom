@@ -1,9 +1,5 @@
 import {
   Home,
-  Inbox,
-  Calendar,
-  Search,
-  Settings,
   User2,
   ChevronUp,
   Plus,
@@ -24,7 +20,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
@@ -53,26 +48,6 @@ const items = [
     title: "Home",
     url: "/",
     icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
   },
 ];
 
@@ -110,10 +85,6 @@ const AppSidebar = () => {
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
-
-                  {item.title === "Inbox" && (
-                    <SidebarMenuBadge>24</SidebarMenuBadge>
-                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

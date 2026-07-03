@@ -1,10 +1,9 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { clerkPlugin, getAuth } from "@clerk/fastify";
+import { clerkPlugin } from "@clerk/fastify";
 import { shouldBeUser } from "./middleware/authMiddleware.js";
-import { connectOrderDB, Order } from "@repo/orderdb";
+import { connectOrderDB } from "@repo/orderdb";
 import { orderRoute } from "./routes/order.js";
-import { consumer, producer } from "./utils/kafka.js";
 const fastify = Fastify();
 
 fastify.register(cors, {
@@ -47,35 +46,6 @@ const start = async () => {
     connectOrderDB().catch((dbErr) => {
       console.error("Failed to connect to MongoDB on startup:", dbErr.message || dbErr);
     });
-
-    // Connect to Kafka in the background
-    try {
-      await Promise.all([
-        producer.connect(),
-        consumer.connect()
-      ]);
-
-      await consumer.subscribe({
-        topic: "payment.processed",
-        eachMessage: async (message: any) => {
-          const { orderId, status } = message;
-          console.log(`[Order Service] Received payment status update for ${orderId}: ${status}`);
-          try {
-            const updatedOrder = await Order.findByIdAndUpdate(
-              orderId,
-              { status },
-              { new: true }
-            );
-            console.log(`[Order Service] Successfully updated order status in DB:`, updatedOrder);
-          } catch (error) {
-            console.error(`[Order Service] Failed to update order status for ${orderId}:`, error);
-          }
-        }
-      });
-      console.log("Connected to Kafka successfully");
-    } catch (kafkaError) {
-      console.error("Error connecting to Kafka:", kafkaError);
-    }
 
   } catch (err) {
     console.error("Error starting Fastify server:", err);

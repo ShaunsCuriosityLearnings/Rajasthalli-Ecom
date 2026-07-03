@@ -6,7 +6,6 @@ import { clerkMiddleware } from "@clerk/express";
 
 import { shouldBeAdmin } from "./middleware/authMiddleware.js";
 import userRoute from "./routes/user.routes.js";
-import { producer } from "./utils/kafka.js";
 
 // Fail fast if required environment variables are missing
 if (!process.env.CLERK_SECRET_KEY) {
@@ -53,13 +52,6 @@ const start = async () => {
     app.listen(PORT, () => {
         console.log(`🚀 Auth service is running on port ${PORT}`);
     });
-
-    try {
-        await producer.connect();
-        console.log("Connected to Kafka successfully");
-    } catch (error) {
-        console.error("Error connecting to Kafka:", error);
-    }
 };
 
 start();

@@ -19,7 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/TablePagination";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Trash2 } from "lucide-react";
 import {
   Select,
@@ -42,10 +42,12 @@ export function DataTable<TData, TValue>({
   const [rowSelection, setRowSelection] = useState({});
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
 
-  const filteredData = data.filter((item: any) => {
-    if (selectedStatus === "all") return true;
-    return item.status === selectedStatus;
-  });
+  const filteredData = useMemo(() => {
+    return data.filter((item: any) => {
+      if (selectedStatus === "all") return true;
+      return item.status === selectedStatus;
+    });
+  }, [data, selectedStatus]);
 
   const table = useReactTable({
     data: filteredData,

@@ -1,6 +1,5 @@
 import { Router } from "express";
 import clerkClient from "../utils/clerk.js";
-import { producer } from "../utils/kafka.js";
 
 const router: Router = Router();
 
@@ -48,16 +47,6 @@ router.post("/", async (req, res) => {
     type CreateParams = Parameters<typeof clerkClient.users.createUser>[0];
     const newUser: CreateParams = req.body;
     const user = await clerkClient.users.createUser(newUser);
-
-    // Send kafka event and await it
-    await producer.send("user.created", {
-      value: {
-        username: user.username,
-        email: user.emailAddresses[0]?.emailAddress,
-        phone: user.phoneNumbers[0]?.phoneNumber,
-        name: `${user.firstName} ${user.lastName}`,
-      },
-    });
 
     res.status(200).json(user);
   } catch (error: any) {

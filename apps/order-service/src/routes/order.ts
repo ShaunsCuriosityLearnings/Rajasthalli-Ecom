@@ -1,7 +1,9 @@
 import { Order } from "@repo/orderdb";
 import { FastifyInstance } from "fastify";
-import { shouldBeAdmin, shouldBeUser } from "../middleware/authMiddleware";
-import { producer } from "../utils/kafka.js";
+import { shouldBeAdmin, shouldBeUser } from "../middleware/authMiddleware.js";
+import { fireAndForget } from "../utils/httpClient.js";
+
+const EMAIL_SERVICE_URL = process.env.EMAIL_SERVICE_URL || "http://localhost:8005";
 
 export const orderRoute = async (fastify: FastifyInstance) => {
   // Get all orders for logged-in user
@@ -287,12 +289,13 @@ export const orderRoute = async (fastify: FastifyInstance) => {
           });
         }
 
-        // Publish order status updated event
-        producer.send("order.status.updated", {
-          orderId: id,
-          status: status,
-        }).catch((err) => {
-          console.error("[Order Service] Failed to publish order.status.updated event:", err);
+        // Notify Email Service asynchronously (fire-and-forget)
+        fireAndForget(`${EMAIL_SERVICE_URL}/email/order-status-update`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ orderId: id, status }),
         });
 
         return reply.send({ success: true, order: updatedOrder });
@@ -334,12 +337,13 @@ export const orderRoute = async (fastify: FastifyInstance) => {
           });
         }
 
-        // Publish order status updated event
-        producer.send("order.status.updated", {
-          orderId: id,
-          status: status,
-        }).catch((err) => {
-          console.error("[Order Service] Failed to publish order.status.updated event:", err);
+        // Notify Email Service asynchronously (fire-and-forget)
+        fireAndForget(`${EMAIL_SERVICE_URL}/email/order-status-update`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ orderId: id, status }),
         });
 
         return reply.send({ success: true, order: updatedOrder });

@@ -1,4 +1,5 @@
-import type { Product, Category, ProductImages, MainCategory, HeroSlide } from "@repo/productdb";
+import { z } from "zod";
+import type { Product, Category, ProductImages, MainCategory } from "@repo/productdb";
 
 export type ProductType = Omit<Product, "price" | "createdAt" | "updatedAt" | "categorySlug"> & {
   price: Product["price"] | number;
