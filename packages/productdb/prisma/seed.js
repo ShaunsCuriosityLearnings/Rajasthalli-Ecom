@@ -1,6 +1,22 @@
 import { PrismaClient } from "../generated/prisma/index.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Fallback to load DATABASE_URL from .env if not present in environment
+if (!process.env.DATABASE_URL) {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const envPath = path.resolve(__dirname, "../.env");
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, "utf-8");
+    const matches = envContent.match(/DATABASE_URL=["']?([^"'\r\n]+)["']?/);
+    if (matches && matches[1]) {
+      process.env.DATABASE_URL = matches[1];
+    }
+  }
+}
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -226,7 +242,13 @@ async function main() {
     });
   }
 
-  console.log("✅ Database seeded successfully!");
+  console.log("🔄 Resetting database auto-increment sequences...");
+  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"Product"', 'id'), coalesce(max(id), 1)) FROM "Product";`);
+  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"Category"', 'id'), coalesce(max(id), 1)) FROM "Category";`);
+  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"MainCategory"', 'id'), coalesce(max(id), 1)) FROM "MainCategory";`);
+  await prisma.$executeRawUnsafe(`SELECT setval(pg_get_serial_sequence('"ProductImages"', 'id'), coalesce(max(id), 1)) FROM "ProductImages";`);
+
+  console.log("✅ Database seeded and sequences reset successfully!");
 }
 
 main()

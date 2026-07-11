@@ -5,7 +5,9 @@
   "scripts": {
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "node prisma/seed.js",
+    "db:reset-sequences": "node prisma/reset-sequences.js"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",
