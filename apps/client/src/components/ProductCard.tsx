@@ -38,33 +38,38 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           />
 
           {/* Wishlist */}
-          <button className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm hover:bg-white transition">
-            <Heart className="w-4 h-4" />
+          <button className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 bg-white/90 backdrop-blur-sm p-1.5 sm:p-2 rounded-full shadow-sm hover:bg-white transition">
+            <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </Link>
 
       {/* CONTENT */}
-      <div className="p-4">
-        <p className="text-[11px] uppercase tracking-widest text-primary-green font-semibold mb-2">
+      <div className="p-3 sm:p-4">
+        <p className="text-[9px] sm:text-[11px] uppercase tracking-widest text-primary-green font-semibold mb-1 sm:mb-2">
           Rajasthalii
         </p>
 
-        <h3 className="font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-green transition-colors duration-200">
+        <h3 className="text-xs sm:text-sm md:text-base font-semibold text-gray-900 line-clamp-1 group-hover:text-primary-green transition-colors duration-200">
           {product.name}
         </h3>
 
-        <p className="text-xs text-gray-500 mt-1 line-clamp-2 min-h-[32px]">
+        <p className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-2 min-h-[15px] sm:min-h-[32px]">
           {product.shortDescription}
         </p>
 
-        {/* SIZE */}
-        <div className="mt-4 flex items-center justify-between">
+        {/* FOOTER (Size select, Price, Add Button) */}
+        <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-gray-100">
           <div>
-            <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Select Size</span>
+            <p className="text-sm sm:text-base md:text-lg font-bold text-heritage-maroon">
+              ₹{Number(product.price).toLocaleString("en-IN")}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1.5 self-end xs:self-auto">
             <select
               value={selectedSize}
-              className="text-xs border border-gray-200 rounded-lg px-2.5 py-1.5 outline-none focus:border-accent-gold transition-colors bg-[#faf7f2]/50"
+              className="text-[10px] sm:text-xs border border-gray-200 rounded-lg px-1.5 sm:px-2.5 py-1 sm:py-1.5 outline-none focus:border-accent-gold transition-colors bg-[#faf7f2]/50 cursor-pointer"
               onChange={(e) => setSelectedSize(e.target.value)}
             >
               {product.sizes.map((size) => (
@@ -73,23 +78,14 @@ const ProductCard = ({ product }: { product: ProductType }) => {
                 </option>
               ))}
             </select>
-          </div>
-        </div>
 
-        {/* FOOTER */}
-        <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-          <div>
-            <p className="text-lg font-bold text-heritage-maroon">
-              ₹{Number(product.price).toLocaleString("en-IN")}
-            </p>
+            <button
+              onClick={handleAddToCart}
+              className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary-green text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider hover:bg-primary-green-hover transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
+            >
+              Add
+            </button>
           </div>
-
-          <button
-            onClick={handleAddToCart}
-            className="px-4 py-2 rounded-full bg-primary-green text-white text-xs font-semibold uppercase tracking-wider hover:bg-primary-green-hover transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
-          >
-            Add
-          </button>
         </div>
       </div>
     </article>
