@@ -4,19 +4,37 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShippingFormInputs, shippingFormSchema } from "@repo/types";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { useEffect } from "react";
 
 const ShippingForm = ({
   setShippingForm,
 }: {
   setShippingForm: (data: ShippingFormInputs) => void;
 }) => {
+  const { user, isLoaded } = useUser();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ShippingFormInputs>({
     resolver: zodResolver(shippingFormSchema),
   });
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      reset({
+        email: user.primaryEmailAddress?.emailAddress || "",
+        name: user.fullName || "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        pincode: "",
+      });
+    }
+  }, [isLoaded, user, reset]);
 
   const router = useRouter();
 

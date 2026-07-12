@@ -350,11 +350,28 @@ export const sendOrderConfirmationEmail = async (order: any) => {
     </html>
   `;
 
-  return sendMail({
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+
+  const info = await sendMail({
     to: customerEmail,
     subject: `Order Confirmation - #${orderId}`,
     html: emailHtml,
   });
+
+  if (adminEmail && adminEmail.toLowerCase() !== customerEmail.toLowerCase()) {
+    try {
+      console.log(`[Email Service] Sending admin alert copy to: ${adminEmail}`);
+      await sendMail({
+        to: adminEmail,
+        subject: `[Admin Alert] New Order Confirmed - #${orderId}`,
+        html: emailHtml,
+      });
+    } catch (adminErr: any) {
+      console.error(`[Email Service] Failed to send admin copy for order ${orderId}:`, adminErr.message || adminErr);
+    }
+  }
+
+  return info;
 };
 
 export const sendOrderStatusUpdateEmail = async (order: any, newStatus: string) => {
@@ -634,9 +651,26 @@ export const sendOrderStatusUpdateEmail = async (order: any, newStatus: string) 
     </html>
   `;
 
-  return sendMail({
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+
+  const info = await sendMail({
     to: customerEmail,
     subject: `Order Update: #${orderId} - ${statusInfo.title}`,
     html: emailHtml,
   });
+
+  if (adminEmail && adminEmail.toLowerCase() !== customerEmail.toLowerCase()) {
+    try {
+      console.log(`[Email Service] Sending admin status alert copy to: ${adminEmail}`);
+      await sendMail({
+        to: adminEmail,
+        subject: `[Admin Alert] Order status updated to ${newStatus} - #${orderId}`,
+        html: emailHtml,
+      });
+    } catch (adminErr: any) {
+      console.error(`[Email Service] Failed to send admin copy of status update for order ${orderId}:`, adminErr.message || adminErr);
+    }
+  }
+
+  return info;
 };
