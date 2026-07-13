@@ -105,9 +105,10 @@ export default function BulkUploadProducts() {
 
   const parseCSV = (text: string): Record<string, string>[] => {
     const lines = text.split(/\r?\n/);
-    if (lines.length === 0) return [];
+    const firstLine = lines[0];
+    if (!firstLine) return [];
 
-    const headers = lines[0].split(",").map(h => h.trim().replace(/^["']|["']$/g, ''));
+    const headers = firstLine.split(",").map(h => h.trim().replace(/^["']|["']$/g, ''));
     const rows: Record<string, string>[] = [];
 
     for (let i = 1; i < lines.length; i++) {
