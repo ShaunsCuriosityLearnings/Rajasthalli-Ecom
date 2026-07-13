@@ -39,6 +39,7 @@ const AddCategory = () => {
   const { getToken } = useAuth();
   const [mainCategories, setMainCategories] = useState<MainCategoryType[]>([]);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categoryFormSchema),
@@ -46,8 +47,41 @@ const AddCategory = () => {
       name: "",
       slug: "",
       mainCategoryId: "",
+      imageUrl: "",
     },
   });
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const presetName = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "rajasthalii_preset";
+      formData.append("upload_preset", presetName);
+
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME || "dczs83y98";
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || "Failed to upload image to Cloudinary");
+      }
+
+      const data = await res.json();
+      form.setValue("imageUrl", data.secure_url, { shouldValidate: true });
+    } catch (error: any) {
+      console.error("Error uploading category image:", error);
+      alert(error.message || "An error occurred during file upload. Please verify your Cloudinary configurations.");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   useEffect(() => {
     const fetchMainCategories = async () => {
@@ -70,7 +104,7 @@ const AddCategory = () => {
   };
 
   const mutation = useMutation({
-    mutationFn: async (payload: { name: string; slug: string; mainCategoryId: number | null }) => {
+    mutationFn: async (payload: { name: string; slug: string; mainCategoryId: number | null; imageUrl: string | null }) => {
       const token = await getToken();
       const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
 
@@ -105,6 +139,7 @@ const AddCategory = () => {
       name: values.name,
       slug: values.slug,
       mainCategoryId: values.mainCategoryId && values.mainCategoryId !== "none" ? Number(values.mainCategoryId) : null,
+      imageUrl: values.imageUrl || null,
     };
     mutation.mutate(payload);
   };
@@ -187,7 +222,40 @@ const AddCategory = () => {
                 )}
               />
 
-              <Button type="submit" disabled={mutation.isPending} className="w-full">
+              {/* Category Image */}
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category Image</FormLabel>
+                    <FormControl>
+                      <div className="flex flex-col gap-2">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={uploadingImage}
+                        />
+                        {uploadingImage && <p className="text-xs text-muted-foreground animate-pulse">Uploading image to Cloudinary...</p>}
+                        {field.value && (
+                          <div className="relative w-28 h-28 border rounded-md overflow-hidden mt-2 shadow-xs">
+                            <img
+                              src={field.value}
+                              alt="Category Preview"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormDescription>Upload a main portrait image for this category.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button type="submit" disabled={mutation.isPending || uploadingImage} className="w-full">
                 {mutation.isPending ? "Creating..." : "Submit"}
               </Button>
 

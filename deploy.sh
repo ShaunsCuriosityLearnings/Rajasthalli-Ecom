@@ -14,6 +14,10 @@ git pull origin main
 echo "📦 Installing npm dependencies..."
 npm install
 
+# 2.5 Update database schema
+echo "🗄️ Syncing database schema with Prisma..."
+npx prisma db push --schema=packages/productdb/prisma/schema.prisma --skip-generate
+
 # 3. Build all applications (both microservices & Next.js frontends)
 echo "🏗️ Building all applications..."
 npm run build

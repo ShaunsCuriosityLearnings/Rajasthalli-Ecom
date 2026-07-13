@@ -35,6 +35,7 @@ export const categoryFormSchema = z.object({
   name: z.string().min(1, { message: "Name is Required!" }),
   slug: z.string().min(1, { message: "Slug is Required!" }),
   mainCategoryId: z.string().optional(),
+  imageUrl: z.string().optional(),
 });
 
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;

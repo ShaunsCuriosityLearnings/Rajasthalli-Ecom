@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { prisma, Prisma } from "@repo/productdb";
 
 export const createCategory = async (req: Request, res: Response) => {
-  const { name, slug, mainCategoryId } = req.body;
+  const { name, slug, mainCategoryId, imageUrl } = req.body;
 
   const category = await prisma.category.create({
     data: {
       name,
       slug,
       mainCategoryId: mainCategoryId ? Number(mainCategoryId) : null,
+      imageUrl: imageUrl || null,
     },
     include: {
       mainCategory: true,
@@ -20,11 +21,12 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const updateCategory = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, slug, mainCategoryId } = req.body;
+  const { name, slug, mainCategoryId, imageUrl } = req.body;
 
   const updateData: any = {};
   if (name !== undefined) updateData.name = name;
   if (slug !== undefined) updateData.slug = slug;
+  if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
   if (mainCategoryId !== undefined) {
     updateData.mainCategoryId = mainCategoryId ? Number(mainCategoryId) : null;
   }
