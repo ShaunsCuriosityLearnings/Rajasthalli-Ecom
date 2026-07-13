@@ -176,6 +176,7 @@ export default function BulkUploadProducts() {
       for (let i = 0; i < csvRows.length; i++) {
         const rowNum = i + 1;
         const row = csvRows[i];
+        if (!row) continue;
         const productName = row.name || `Row ${rowNum}`;
 
         setCurrentProgress(`Processing row ${rowNum}/${csvRows.length}: ${productName}...`);
