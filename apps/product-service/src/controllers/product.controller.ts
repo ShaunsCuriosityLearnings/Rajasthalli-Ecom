@@ -204,3 +204,106 @@ export const logPaymentProcessed = async (req: Request, res: Response) => {
   return res.status(200).json({ success: true });
 };
 
+export const bulkUploadProducts = async (req: Request, res: Response) => {
+  const { products } = req.body;
+
+  if (!products || !Array.isArray(products)) {
+    return res.status(400).json({
+      success: false,
+      message: "Products array is required",
+    });
+  }
+
+  try {
+    // 1. Fetch all category slugs to validate in memory (extremely fast validation)
+    const existingCategories = await prisma.category.findMany({
+      select: { slug: true },
+    });
+    const categorySlugs = new Set(existingCategories.map((c) => c.slug));
+
+    const results = {
+      total: products.length,
+      successCount: 0,
+      failedCount: 0,
+      errors: [] as { row: number; name: string; error: string }[],
+    };
+
+    // 2. Process each product individually so one bad row doesn't fail the whole batch
+    for (let i = 0; i < products.length; i++) {
+      const rowNum = i + 1;
+      const p = products[i];
+
+      // Validation
+      if (!p.name || !p.price || !p.categorySlug || !p.images) {
+        results.failedCount++;
+        results.errors.push({
+          row: rowNum,
+          name: p.name || `Row ${rowNum}`,
+          error: "Missing required fields (name, price, categorySlug, or images)",
+        });
+        continue;
+      }
+
+      if (!categorySlugs.has(p.categorySlug)) {
+        results.failedCount++;
+        results.errors.push({
+          row: rowNum,
+          name: p.name,
+          error: `Category slug '${p.categorySlug}' does not exist in the database`,
+        });
+        continue;
+      }
+
+      const { frontView, sideView, backView } = p.images;
+      if (!frontView || !sideView || !backView) {
+        results.failedCount++;
+        results.errors.push({
+          row: rowNum,
+          name: p.name,
+          error: "Product images must include frontView, sideView, and backView",
+        });
+        continue;
+      }
+
+      try {
+        await prisma.product.create({
+          data: {
+            name: p.name,
+            shortDescription: p.shortDescription || "",
+            description: p.description || "",
+            price: new Prisma.Decimal(p.price),
+            sizes: Array.isArray(p.sizes) ? p.sizes : [p.sizes || "Free Size"],
+            categorySlug: p.categorySlug,
+            images: {
+              create: {
+                frontView,
+                sideView,
+                backView,
+              },
+            },
+          },
+        });
+        results.successCount++;
+      } catch (dbErr: any) {
+        results.failedCount++;
+        results.errors.push({
+          row: rowNum,
+          name: p.name,
+          error: dbErr.message || "Database write error occurred",
+        });
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      results,
+    });
+  } catch (error: any) {
+    console.error("Bulk Upload Controller Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "An error occurred during bulk product upload",
+    });
+  }
+};
+

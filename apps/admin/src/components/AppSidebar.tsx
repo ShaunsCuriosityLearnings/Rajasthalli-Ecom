@@ -8,6 +8,7 @@ import {
   ShoppingBasket,
   Layers3,
   Tags,
+  UploadCloud,
 } from "lucide-react";
 
 import {
@@ -42,6 +43,7 @@ import AddUser from "./AddUser";
 import AddCategory from "./AddCategory";
 import AddProduct from "./AddProduct";
 import MainCategory from "./MainCategory";
+import BulkUploadProducts from "./BulkUploadProducts";
 
 const items = [
   {
@@ -121,6 +123,19 @@ const AppSidebar = () => {
                   </SheetTrigger>
 
                   <AddProduct />
+                </Sheet>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <SidebarMenuButton>
+                      <UploadCloud />
+                      Bulk Upload Products
+                    </SidebarMenuButton>
+                  </SheetTrigger>
+
+                  <BulkUploadProducts />
                 </Sheet>
               </SidebarMenuItem>
 

@@ -92,142 +92,92 @@ const HeroSection = () => {
     const slide = (slides[activeSlide] || slides[0]) as SlideData;
 
     return (
-        <section className="relative w-full py-8 md:py-16 overflow-hidden">
-            {/* Background Gradients & Sunburst */}
-            <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[#faf7f2] via-[#f5efe2] to-[#eef4e8]" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-radial from-[#c89b3c]/5 to-transparent blur-3xl -z-10" />
+        <section className="relative w-full h-[450px] sm:h-[550px] md:h-[650px] lg:h-[700px] overflow-hidden">
+            {/* Main Background Image */}
+            <div className="absolute inset-0 transition-all duration-700">
+                <Image
+                    src={slide.mainImage}
+                    alt={slide.title}
+                    fill
+                    priority
+                    className={`object-cover transition-all duration-[600ms] ease-in-out scale-100 ${
+                        isTransitioning ? "opacity-30 scale-98" : "opacity-100 scale-100"
+                    }`}
+                />
+            </div>
 
-            {/* Double Gold Heritage Border Container */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative border border-[#c89b3c]/30 rounded-[40px] p-6 md:p-12 lg:p-16 bg-[#faf7f2]/40 backdrop-blur-xs shadow-lg">
-                    {/* Corner Flourishes */}
-                    <span className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#c89b3c]/40 rounded-tl-sm" />
-                    <span className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#c89b3c]/40 rounded-tr-sm" />
-                    <span className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#c89b3c]/40 rounded-bl-sm" />
-                    <span className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#c89b3c]/40 rounded-br-sm" />
+            {/* Premium Gradient Overlay for Text Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#faf7f2]/95 via-[#faf7f2]/75 to-transparent md:from-[#faf7f2]/90 md:via-[#faf7f2]/55 md:to-transparent" />
 
-                    {/* Grid Layout */}
-                    <div className="grid lg:grid-cols-12 gap-10 items-center">
-                        {/* LEFT CONTENT (7 cols on lg) */}
-                        <div
-                            className={`lg:col-span-7 flex flex-col items-start transition-all duration-300 ${isTransitioning ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-                                }`}
-                        >
-                            {/* Tag Badge */}
-                            <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#7d1f1f]/8 text-[#7d1f1f] text-xs font-semibold tracking-wider uppercase border border-[#7d1f1f]/15 mb-6 shadow-xs">
-                                <Sparkles size={12} className="animate-spin-slow text-[#c89b3c]" />
-                                {slide.tag}
+            {/* Content Container aligned with site width */}
+            <div className="absolute inset-0 flex items-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-start">
+                    <div
+                        className={`max-w-2xl transition-all duration-500 ${
+                            isTransitioning ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+                        }`}
+                    >
+                        {/* Tag Badge */}
+                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#7d1f1f]/8 text-[#7d1f1f] text-[10px] sm:text-xs font-semibold tracking-wider uppercase border border-[#7d1f1f]/15 mb-6 shadow-xs">
+                            <Sparkles size={12} className="animate-spin-slow text-[#c89b3c]" />
+                            {slide.tag}
+                        </span>
+
+                        {/* Main Heading */}
+                        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-[#16301d] tracking-wide font-[family-name:var(--font-heading)]">
+                            {slide.title.split(" ").slice(0, -2).join(" ")}{" "}
+                            <span className="text-[#7d1f1f] italic">{slide.title.split(" ").slice(-2).join(" ")}</span>
+                        </h2>
+
+                        {/* Subtitle */}
+                        <p className="mt-4 text-xs sm:text-sm md:text-base text-gray-700 font-[family-name:var(--font-body)] max-w-lg leading-relaxed font-light">
+                            {slide.subtitle}
+                        </p>
+
+                        {/* Price / Offer Flag */}
+                        <div className="mt-6 flex items-center gap-3">
+                            <span className="h-px w-8 bg-[#c89b3c]/40" />
+                            <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#c89b3c] uppercase font-[family-name:var(--font-body)]">
+                                {slide.offer}
                             </span>
-
-                            {/* Main Heading */}
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#18320b] tracking-wide font-[family-name:var(--font-heading)]">
-                                {slide.title.split(" ").slice(0, -2).join(" ")}{" "}
-                                <span className="text-[#7d1f1f] italic">{slide.title.split(" ").slice(-2).join(" ")}</span>
-                            </h2>
-
-                            {/* Subtitle */}
-                            <p className="mt-4 text-sm md:text-base text-gray-600 font-[family-name:var(--font-body)] max-w-xl leading-relaxed">
-                                {slide.subtitle}
-                            </p>
-
-                            {/* Price / Offer Flag */}
-                            <div className="mt-6 flex items-center gap-3">
-                                <span className="h-px w-8 bg-[#c89b3c]/40" />
-                                <span className="text-sm font-semibold tracking-widest text-[#c89b3c] uppercase font-[family-name:var(--font-body)]">
-                                    {slide.offer}
-                                </span>
-                            </div>
-
-                            {/* Buttons */}
-                            <div className="flex flex-wrap gap-4 mt-8">
-                                <Link
-                                    href={slide.buttonLink}
-                                    className="px-8 py-3.5 bg-[#18320b] hover:bg-[#234712] text-white border border-[#c89b3c]/30 rounded-full font-semibold tracking-wide text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-xl flex items-center gap-2 cursor-pointer"
-                                >
-                                    {slide.buttonText}
-                                    <ArrowRight size={16} className="text-[#c89b3c]" />
-                                </Link>
-
-                                <Link
-                                    href="/products"
-                                    className="px-8 py-3.5 border border-[#c89b3c]/40 hover:bg-[#c89b3c]/8 text-[#18320b] rounded-full font-semibold tracking-wide text-xs md:text-sm transition-all duration-300 cursor-pointer"
-                                >
-                                    View Catalog
-                                </Link>
-                            </div>
-
-                            {/* Features Bar */}
-                            <div className="flex items-center gap-6 mt-10 text-[11px] text-[#18320b]/75 font-semibold tracking-wider uppercase font-[family-name:var(--font-body)]">
-                                <span className="flex items-center gap-1">
-                                    <Shield size={13} className="text-[#c89b3c]" /> 100% Handcrafted
-                                </span>
-                                <span className="flex items-center gap-1">
-                                    <Heart size={13} className="text-[#7d1f1f]" /> Artisan Direct
-                                </span>
-                            </div>
                         </div>
 
-                        {/* RIGHT IMAGE COLLAGE (5 cols on lg) */}
-                        <div
-                            className={`lg:col-span-5 relative flex items-center justify-center transition-all duration-300 ${isTransitioning ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                                }`}
-                        >
-                            {/* Decorative Mandalas / Sunburst in background */}
-                            <div className="absolute w-72 h-72 border border-[#c89b3c]/10 rounded-full animate-spin-slow pointer-events-none -z-10" />
-                            <div className="absolute w-[320px] h-[320px] border border-dashed border-[#c89b3c]/5 rounded-full pointer-events-none -z-10" />
+                        {/* Buttons */}
+                        <div className="flex flex-wrap gap-4 mt-8">
+                            <Link
+                                href={slide.buttonLink}
+                                className="px-8 py-3.5 bg-[#16301d] hover:bg-[#234c2f] text-white border border-[#c89b3c]/30 rounded-full font-semibold tracking-wide text-xs md:text-sm transition-all duration-300 shadow-md hover:shadow-xl flex items-center gap-2 cursor-pointer"
+                            >
+                                {slide.buttonText}
+                                <ArrowRight size={16} className="text-[#c89b3c]" />
+                            </Link>
 
-                            {/* Main Image Frame */}
-                            <div className="relative w-full h-[360px] md:h-[450px] rounded-[36px] overflow-hidden shadow-2xl border border-[#c89b3c]/20">
-                                <Image
-                                    src={slide.mainImage}
-                                    alt={slide.title}
-                                    fill
-                                    priority
-                                    className="object-cover transition-transform duration-700 hover:scale-105"
-                                />
-                            </div>
-
-                            {/* Layered Overlapping Image */}
-                            <div className="absolute -bottom-6 -left-8 w-36 h-48 md:w-44 md:h-56 rounded-3xl overflow-hidden shadow-2xl border-4 border-[#faf7f2] hidden sm:block">
-                                <Image
-                                    src={slide.secondaryImage}
-                                    alt="Creative Highlight"
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-
-                            {/* Floating Card */}
-                            <div className="absolute -right-6 top-10 bg-[#faf7f2] border border-[#c89b3c]/30 rounded-2xl shadow-xl p-4 md:p-5 flex flex-col animate-bounce-slow">
-                                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold font-[family-name:var(--font-body)]">
-                                    {slide.floatingText}
-                                </span>
-                                <span className="font-bold text-sm md:text-base text-[#18320b] mt-1 font-[family-name:var(--font-heading)]">
-                                    {slide.floatingValue}
-                                </span>
-                            </div>
+                            <Link
+                                href="/products"
+                                className="px-8 py-3.5 border border-[#c89b3c]/40 hover:bg-[#c89b3c]/8 text-[#16301d] rounded-full font-semibold tracking-wide text-xs md:text-sm transition-all duration-300 cursor-pointer bg-white/35 backdrop-blur-xs"
+                            >
+                                View Catalog
+                            </Link>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                {/* Dynamic Navigation Tabs (Pills under the Hero Box) */}
-                <div className="flex justify-center items-center gap-3 mt-8">
-                    {slides.map((item, idx) => {
-                        const isTabActive = activeSlide === idx;
-                        return (
-                            <button
-                                key={item.id}
-                                onClick={() => handleTabClick(idx)}
-                                className={`px-4 py-2 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full border transition-all duration-300 cursor-pointer ${isTabActive
-                                        ? "bg-[#18320b] border-[#c89b3c]/40 text-[#faf7f2] shadow-sm"
-                                        : "bg-[#faf7f2]/60 hover:bg-[#faf7f2] border-gray-200 text-gray-500"
-                                    }`}
-                            >
-                                0{item.id} {item.tag.split(" ").slice(1).join(" ")}
-                            </button>
-                        );
-                    })}
-                </div>
+            {/* Navigation Dots (Replacing pills for clean minimal look) */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2.5 bg-[#faf7f2]/80 backdrop-blur-xs px-4 py-3 rounded-full border border-[#c89b3c]/20 shadow-xs">
+                {slides.map((item, idx) => {
+                    const isTabActive = activeSlide === idx;
+                    return (
+                        <button
+                            key={item.id}
+                            onClick={() => handleTabClick(idx)}
+                            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                                isTabActive ? "w-8 bg-[#16301d]" : "w-2 bg-gray-400/40 hover:bg-gray-400"
+                            }`}
+                            aria-label={`Go to slide ${idx + 1}`}
+                        />
+                    );
+                })}
             </div>
         </section>
     );

@@ -202,7 +202,7 @@ const ProductList = async ({
 
   const products = await fetchData({ category, sort, search, params });
   return (
-    <div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <Suspense fallback={<div className="h-12 w-full bg-gray-50 animate-pulse rounded-xl mb-6" />}>
         <Categories />
       </Suspense>

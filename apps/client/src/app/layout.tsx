@@ -67,10 +67,8 @@ export default function RootLayout({
             <Navbar />
 
             {/* Main Content */}
-            <main className="flex-1">
-              <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-12">
-                {children}
-              </div>
+            <main className="flex-1 w-full">
+              {children}
             </main>
 
             {/* Footer */}
