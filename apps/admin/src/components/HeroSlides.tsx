@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2, Plus, UploadCloud, Link as LinkIcon, ExternalLink } from "lucide-react";
+import { Trash2, Plus, UploadCloud, Link as LinkIcon, ExternalLink, FileImage } from "lucide-react";
 
 interface HeroSlide {
   id: number;
