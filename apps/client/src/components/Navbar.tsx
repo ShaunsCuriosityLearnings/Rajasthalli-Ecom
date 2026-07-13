@@ -28,13 +28,13 @@ const Navbar = () => {
       <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-12 py-3.5">
         {/* Left Actions: Logo & Search Bar */}
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center shrink-0 border border-neutral-200 bg-white p-1 rounded-md shadow-2xs hover:border-[#c89b3c]/50 transition-colors duration-300">
+          <Link href="/" className="flex items-center shrink-0 border border-neutral-200 bg-white p-1 rounded-lg shadow-2xs hover:border-[#c89b3c]/50 transition-colors duration-300">
             <Image
               src="/logo.jpeg"
               alt="Rajasthalii Logo"
-              width={56}
-              height={44}
-              className="object-contain hover:scale-105 transition-transform duration-300"
+              width={100}
+              height={60}
+              className="object-contain max-h-[56px] hover:scale-102 transition-transform duration-300"
             />
           </Link>
           <Suspense fallback={<div className="w-32 h-8 bg-neutral-200/30 animate-pulse rounded-full" />}>
