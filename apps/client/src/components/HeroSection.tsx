@@ -65,6 +65,8 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
 
   const slide = activeSlides[activeSlide] || activeSlides[0] || fallbackSlides[0];
 
+  if (!slide) return null;
+
   return (
     <section className="relative w-full aspect-[2560/1440] max-h-[85vh] overflow-hidden bg-neutral-100">
       {/* Slide Image wrapped in Redirection Link */}
