@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MainCategoryType } from "@repo/types";
 
@@ -87,6 +88,16 @@ const MainCategories = () => {
 
       <div className="flex items-center justify-center">
         <div className="flex items-center gap-8 lg:gap-14">
+          {/* Custom New Arrivals Link */}
+          <Link
+            href="/products?sort=newest"
+            className="group relative flex items-center gap-1.5 cursor-pointer outline-hidden py-4"
+          >
+            <span className="uppercase tracking-[0.25em] text-[10px] lg:text-[11px] transition-all duration-300 font-[family-name:var(--font-body)] text-neutral-600 font-light group-hover:text-[#7d1f1f]">
+              New Arrivals
+            </span>
+            <span className="absolute -bottom-1 left-0 h-[1.5px] bg-[#16301d] transition-all duration-300 w-0 group-hover:w-full" />
+          </Link>
           {mainCategories.map((category) => {
             const isActive = selectedMainCategory === category.slug;
             const isHovered = hoveredCategory === category.slug;

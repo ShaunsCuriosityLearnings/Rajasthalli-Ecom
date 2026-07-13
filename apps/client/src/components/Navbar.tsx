@@ -35,11 +35,18 @@ const Navbar = () => {
 
         {/* Center Brand Identity */}
         <div className="absolute left-1/2 -translate-x-1/2 text-center">
-          <Link href="/" className="flex flex-col items-center group">
-            <h1 className="text-2xl lg:text-3.5xl font-bold tracking-[0.25em] text-[#16301d] font-[family-name:var(--font-heading)] leading-none transition-colors duration-300 group-hover:text-[#7d1f1f]">
-              RAJASTHALII
+          <Link href="/" className="flex flex-col items-center group gap-1">
+            <Image
+              src="/logo.svg"
+              alt="Rajasthalii Logo"
+              width={34}
+              height={34}
+              className="transition-transform duration-300 group-hover:rotate-12"
+            />
+            <h1 className="text-xl lg:text-2xl font-bold tracking-[0.2em] text-[#16301d] font-[family-name:var(--font-heading)] leading-none transition-colors duration-300 group-hover:text-[#7d1f1f]">
+              Rajasthalii
             </h1>
-            <p className="text-[8px] lg:text-[9px] tracking-[0.4em] text-neutral-500 uppercase font-bold mt-1.5 font-[family-name:var(--font-body)]">
+            <p className="text-[8px] tracking-[0.4em] text-neutral-500 uppercase font-semibold font-[family-name:var(--font-body)]">
               Heritage • Elegance • Tradition
             </p>
           </Link>

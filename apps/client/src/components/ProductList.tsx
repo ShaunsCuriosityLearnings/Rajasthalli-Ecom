@@ -203,6 +203,15 @@ const ProductList = async ({
   const products = await fetchData({ category, sort, search, params });
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      {params === "homepage" && (
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-3.5xl font-bold text-[#16301d] font-[family-name:var(--font-heading)]">
+            New <span className="text-[#7d1f1f] italic">Arrivals</span>
+          </h2>
+          <div className="h-0.5 w-16 bg-[#c89b3c]/60 mx-auto mt-2" />
+        </div>
+      )}
+
       <Suspense fallback={<div className="h-12 w-full bg-gray-50 animate-pulse rounded-xl mb-6" />}>
         {params !== "homepage" && <Categories />}
       </Suspense>
@@ -219,10 +228,10 @@ const ProductList = async ({
 
       <div className="flex justify-center mt-12">
         <Link
-          href={category ? `/products?category=${category}` : "/products"}
+          href={params === "homepage" ? "/products?sort=newest" : (category ? `/products?category=${category}` : "/products")}
           className="px-8 py-3 rounded-full border border-primary-green text-primary-green hover:bg-primary-green hover:text-white transition-all duration-300 font-medium text-sm tracking-wider uppercase shadow-xs hover:shadow-md cursor-pointer"
         >
-          View All Products
+          {params === "homepage" ? "View All New Arrivals" : "View All Products"}
         </Link>
       </div>
     </div>
