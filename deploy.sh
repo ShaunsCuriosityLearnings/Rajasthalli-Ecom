@@ -16,7 +16,7 @@ npm install
 
 # 2.5 Update database schema
 echo "🗄️ Syncing database schema with Prisma..."
-(cd packages/productdb && npx prisma db push --accept-data-loss)
+(cd packages/productdb && npx prisma db push --accept-data-loss && npx prisma generate)
 
 # 3. Build all applications (both microservices & Next.js frontends)
 echo "🏗️ Building all applications..."
