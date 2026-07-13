@@ -26,8 +26,17 @@ const Navbar = () => {
       </div>
 
       <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-12 py-3.5">
-        {/* Left Actions: Search Bar */}
-        <div className="flex items-center">
+        {/* Left Actions: Logo & Search Bar */}
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center shrink-0">
+            <Image
+              src="/logo.jpeg"
+              alt="Rajasthalii Logo"
+              width={38}
+              height={38}
+              className="rounded-full object-cover border border-[#c89b3c]/20 shadow-2xs hover:scale-105 transition-transform duration-300"
+            />
+          </Link>
           <Suspense fallback={<div className="w-32 h-8 bg-neutral-200/30 animate-pulse rounded-full" />}>
             <SearchBar />
           </Suspense>
@@ -35,18 +44,11 @@ const Navbar = () => {
 
         {/* Center Brand Identity */}
         <div className="absolute left-1/2 -translate-x-1/2 text-center">
-          <Link href="/" className="flex flex-col items-center group gap-1">
-            <Image
-              src="/logo.svg"
-              alt="Rajasthalii Logo"
-              width={34}
-              height={34}
-              className="transition-transform duration-300 group-hover:rotate-12"
-            />
+          <Link href="/" className="flex flex-col items-center group">
             <h1 className="text-xl lg:text-2xl font-bold tracking-[0.2em] text-[#16301d] font-[family-name:var(--font-heading)] leading-none transition-colors duration-300 group-hover:text-[#7d1f1f]">
               Rajasthalii
             </h1>
-            <p className="text-[8px] tracking-[0.4em] text-neutral-500 uppercase font-semibold font-[family-name:var(--font-body)]">
+            <p className="text-[8px] tracking-[0.4em] text-neutral-500 uppercase font-semibold font-[family-name:var(--font-body)] mt-1.5">
               Heritage • Elegance • Tradition
             </p>
           </Link>
