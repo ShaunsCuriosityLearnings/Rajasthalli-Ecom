@@ -68,7 +68,7 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
   if (!slide) return null;
 
   return (
-    <section className="relative w-full aspect-[2560/1440] overflow-hidden bg-neutral-100">
+    <section className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px] overflow-hidden bg-neutral-100">
       {/* Slide Image wrapped in Redirection Link */}
       <Link href={slide.linkUrl} className="block w-full h-full relative cursor-pointer">
         <div className="absolute inset-0 transition-all duration-700">
