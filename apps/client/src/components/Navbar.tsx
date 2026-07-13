@@ -19,66 +19,57 @@ const Navbar = () => {
   // }
 
   return (
-    <nav className="sticky top-0 z-50 bg-primary-green/95 backdrop-blur-md border-b border-accent-gold/30 shadow-md flex flex-col">
+    <nav className="sticky top-0 z-50 bg-[#faf7f2]/95 backdrop-blur-md border-b border-[#c89b3c]/15 shadow-sm flex flex-col">
       {/* Announcement Bar */}
-      <div className="bg-heritage-maroon text-[#faf7f2] py-2 px-4 text-center text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase flex items-center justify-center gap-2 border-b border-accent-gold/15">
+      <div className="bg-[#7d1f1f] text-[#faf7f2] py-2 px-4 text-center text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase flex items-center justify-center gap-2 border-b border-[#c89b3c]/10">
         <span>✨ Authentic Indian Wear for Women | Handcrafted Traditional Wear in Mumbai ✨</span>
       </div>
 
-      <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-10 py-3">
-        {/* Left Logo - Wrapped in an elegant cream plaque for contrast */}
-        <Link href="/" className="bg-[#faf7f2] px-4 py-2 rounded-2xl border border-accent-gold/25 flex items-center hover:opacity-95 transition-all duration-300 shadow-sm">
-          <Image
-            src="/logo.jpeg"
-            alt="Rajasthalii"
-            width={160}
-            height={64}
-            className="h-10 md:h-12 w-auto object-contain mix-blend-multiply"
-            priority
-          />
-        </Link>
+      <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-12 py-3.5">
+        {/* Left Actions: Search Bar */}
+        <div className="flex items-center">
+          <Suspense fallback={<div className="w-32 h-8 bg-neutral-200/30 animate-pulse rounded-full" />}>
+            <SearchBar />
+          </Suspense>
+        </div>
 
-        {/* Center Brand */}
-        <div className="absolute left-1/2 -translate-x-1/2 hidden md:block text-center">
-          <h1 className="text-2xl lg:text-3xl font-bold tracking-[0.25em] text-white font-[family-name:var(--font-heading)] leading-none">
-            RAJASTHALII
-          </h1>
-          <p className="text-[9px] lg:text-[10px] tracking-[0.4em] text-bg-cream/80 uppercase font-bold mt-2 font-[family-name:var(--font-body)]">
-            Heritage • Elegance • Tradition
-          </p>
+        {/* Center Brand Identity */}
+        <div className="absolute left-1/2 -translate-x-1/2 text-center">
+          <Link href="/" className="flex flex-col items-center group">
+            <h1 className="text-2xl lg:text-3.5xl font-bold tracking-[0.25em] text-[#16301d] font-[family-name:var(--font-heading)] leading-none transition-colors duration-300 group-hover:text-[#7d1f1f]">
+              RAJASTHALII
+            </h1>
+            <p className="text-[8px] lg:text-[9px] tracking-[0.4em] text-neutral-500 uppercase font-bold mt-1.5 font-[family-name:var(--font-body)]">
+              Heritage • Elegance • Tradition
+            </p>
+          </Link>
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-4">
-          <div className="hidden lg:block">
-            <Suspense fallback={<div className="w-32 h-8 bg-white/20 animate-pulse rounded-full" />}>
-              <SearchBar />
-            </Suspense>
-          </div>
-
+        <div className="flex items-center gap-1.5 sm:gap-3">
           <Link
             href="/"
-            className="p-2 rounded-full hover:bg-white/10 text-bg-cream transition-colors duration-300 group"
+            className="p-2 rounded-full hover:bg-neutral-800/5 text-[#16301d] transition-colors duration-300 group"
             title="Home"
           >
-            <Home className="w-5 h-5 text-bg-cream group-hover:text-accent-gold transition-colors duration-300" />
+            <Home className="w-5 h-5 text-[#16301d] group-hover:text-[#7d1f1f] transition-colors duration-300" />
           </Link>
 
           <Link
             href="/notifications"
-            className="p-2 rounded-full hover:bg-white/10 text-bg-cream transition-colors duration-300 group"
+            className="p-2 rounded-full hover:bg-neutral-800/5 text-[#16301d] transition-colors duration-300 group"
             title="Notifications"
           >
-            <Bell className="w-5 h-5 text-bg-cream group-hover:text-accent-gold transition-colors duration-300" />
+            <Bell className="w-5 h-5 text-[#16301d] group-hover:text-[#7d1f1f] transition-colors duration-300" />
           </Link>
 
           <ShoppingCartIcon />
 
           {/* User Sign-In/Profile */}
-          <div className="flex items-center pl-2 border-l border-white/20 ml-1">
+          <div className="flex items-center pl-2 border-l border-neutral-200 ml-1">
             <Show when="signed-out">
               <SignInButton mode="modal">
-                <button className="px-4 py-1.5 border border-accent-gold text-accent-gold hover:bg-accent-gold hover:text-primary-green rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md">
+                <button className="px-4 py-1.5 border border-[#16301d] text-[#16301d] hover:bg-[#16301d] hover:text-white rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-2xs hover:shadow-sm">
                   Sign In
                 </button>
               </SignInButton>
@@ -90,13 +81,11 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Main Categories Row - pearl white color background */}
-      <div className="hidden lg:flex items-center justify-center gap-6 py-2.5 border-t border-b border-accent-gold/20 bg-[#faf9f6]">
-        <span className="h-px w-14 bg-accent-gold/30" />
-        <Suspense fallback={<div className="h-6 w-96 bg-primary-green/5 animate-pulse rounded-full" />}>
+      {/* Main Categories Row - clean line style */}
+      <div className="hidden lg:flex items-center justify-center gap-6 py-1 border-t border-neutral-200/50 bg-[#faf7f2]/50">
+        <Suspense fallback={<div className="h-6 w-96 bg-neutral-200/30 animate-pulse rounded-full" />}>
           <MainCategories />
         </Suspense>
-        <span className="h-px w-14 bg-accent-gold/30" />
       </div>
     </nav>
   );

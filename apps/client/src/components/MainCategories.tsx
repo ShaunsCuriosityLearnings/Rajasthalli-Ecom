@@ -106,10 +106,10 @@ const MainCategories = () => {
                 >
                   {/* Category Name */}
                   <span
-                    className={`uppercase tracking-[0.25em] text-[11px] lg:text-[12px] font-bold transition-all duration-300 font-[family-name:var(--font-body)] ${
+                    className={`uppercase tracking-[0.25em] text-[10px] lg:text-[11px] transition-all duration-300 font-[family-name:var(--font-body)] ${
                       isActive
-                        ? "text-primary-green font-bold"
-                        : "text-primary-green/75 group-hover:text-heritage-maroon"
+                        ? "text-[#16301d] font-semibold"
+                        : "text-neutral-600 font-light group-hover:text-[#7d1f1f]"
                     }`}
                   >
                     {category.name}
@@ -117,17 +117,17 @@ const MainCategories = () => {
 
                   {/* Dropdown Icon */}
                   <ChevronDown
-                    size={12}
+                    size={10}
                     className={`transition-all duration-300 ${
                       isActive
-                        ? "text-primary-green"
-                        : "text-primary-green/55 group-hover:text-heritage-maroon"
+                        ? "text-[#16301d]"
+                        : "text-neutral-450 group-hover:text-[#7d1f1f]"
                     } ${isHovered ? "rotate-180" : ""}`}
                   />
 
                   {/* Underline */}
                   <span
-                    className={`absolute -bottom-1 left-0 h-[2px] bg-primary-green transition-all duration-300 ${
+                    className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#16301d] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />
@@ -136,9 +136,9 @@ const MainCategories = () => {
                 {/* Subcategories Dropdown (Mega Menu) */}
                 {isHovered && subcats.length > 0 && (
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 ${
+                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-1.5 ${
                       isLarge ? "w-[440px]" : "w-60"
-                    } bg-[#faf7f2]/98 backdrop-blur-md border border-accent-gold/35 shadow-2xl rounded-2xl p-5 z-50 animate-slide-down`}
+                    } bg-[#faf7f2]/98 backdrop-blur-md border border-neutral-200 shadow-xl rounded-xl p-5 z-50 animate-slide-down`}
                   >
                     <div
                       className={`grid ${
@@ -149,9 +149,9 @@ const MainCategories = () => {
                         <button
                           key={sub.slug}
                           onClick={() => handleSubClick(category.slug, sub.slug)}
-                          className="text-left text-xs font-semibold tracking-wider text-primary-green hover:text-heritage-maroon py-2 px-3 rounded-xl hover:bg-accent-gold/10 transition-all duration-200 flex items-center gap-3.5 group/item outline-hidden w-full cursor-pointer"
+                          className="text-left text-xs font-normal tracking-wide text-neutral-700 hover:text-[#7d1f1f] py-2 px-3 rounded-lg hover:bg-neutral-800/5 transition-all duration-200 flex items-center gap-3 group/item outline-hidden w-full cursor-pointer"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent-gold group-hover/item:scale-125 transition-transform duration-200" />
+                          <span className="w-1 h-1 rounded-full bg-[#c89b3c] group-hover/item:scale-125 transition-transform duration-200" />
                           {sub.name}
                         </button>
                       ))}
