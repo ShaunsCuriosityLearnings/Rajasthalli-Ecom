@@ -53,19 +53,10 @@ model ProductImages {
 }
 
 model HeroSlide {
-  id             Int      @id @default(autoincrement())
-  tag            String
-  title          String
-  subtitle       String
-  offer          String
-  buttonText     String
-  buttonLink     String
-  mainImage      String
-  secondaryImage String
-  thirdImage     String?
-  floatingText   String
-  floatingValue  String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  imageUrl  String
+  linkUrl   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 

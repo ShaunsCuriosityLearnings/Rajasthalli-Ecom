@@ -8,6 +8,7 @@ import { shouldBeUser } from "./middleware/authMiddleware.js";
 import productRouter from "./routes/product.route.js";
 import categoryRouter from "./routes/category.route.js";
 import maincategoryRouter from "./routes/maincategory.route.js";
+import heroRouter from "./routes/hero.route.js";
 
 // Fail fast if env is missing
 if (!process.env.DATABASE_URL) {
@@ -52,6 +53,7 @@ app.get("/test", shouldBeUser, (req, res) => {
 app.use("/products", productRouter);
 app.use("/category", categoryRouter);
 app.use("/maincategory", maincategoryRouter);
+app.use("/hero", heroRouter);
 
 // Error Handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

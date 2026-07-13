@@ -74,4 +74,11 @@ export const productFormSchema = z.object({
   }),
 });
 
+export const heroSlideFormSchema = z.object({
+  imageUrl: z.string().min(1, { message: "Image is required!" }),
+  linkUrl: z.string().min(1, { message: "Link URL is required!" }),
+});
+
+export type HeroSlideFormValues = z.infer<typeof heroSlideFormSchema>;
+
 export type ProductFormValues = z.infer<typeof productFormSchema>;

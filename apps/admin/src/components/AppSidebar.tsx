@@ -9,6 +9,7 @@ import {
   Layers3,
   Tags,
   UploadCloud,
+  FileImage,
 } from "lucide-react";
 
 import {
@@ -183,6 +184,16 @@ const AppSidebar = () => {
 
                   <AddCategory />
                 </Sheet>
+              </SidebarMenuItem>
+
+              {/* HERO BANNER */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/hero-slides">
+                    <FileImage />
+                    Hero Banners
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
