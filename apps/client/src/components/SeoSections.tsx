@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { Sparkles, Scissors, Layers, BookOpen, HeartHandshake, ShieldCheck, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function SeoSections() {
   // FAQ accordion toggles
@@ -48,6 +47,7 @@ export default function SeoSections() {
   return (
     <section className="mt-20 space-y-24 font-[family-name:var(--font-body)] text-[#2b2b2b]">
       {/* 3. FAQ Accordion Section */}
+      <div className="max-w-4xl mx-auto space-y-8 pb-12">
         {/* Dynamic Schema Injection */}
         <script
           type="application/ld+json"
