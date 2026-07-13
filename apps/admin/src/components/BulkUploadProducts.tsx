@@ -112,7 +112,9 @@ export default function BulkUploadProducts() {
     const rows: Record<string, string>[] = [];
 
     for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
+      const rawLine = lines[i];
+      if (!rawLine) continue;
+      const line = rawLine.trim();
       if (!line) continue;
 
       const values = [];
