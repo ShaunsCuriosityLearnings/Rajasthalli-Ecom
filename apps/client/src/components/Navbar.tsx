@@ -26,17 +26,27 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-2 gap-4">
-        {/* Left: Logo */}
-        <div className="flex items-center shrink-0">
-          <Link href="/" className="flex items-center transition-transform duration-300 hover:scale-105">
+        {/* Left: Logo & Brand Name */}
+        <div className="flex items-center gap-4 shrink-0">
+          <Link href="/" className="relative flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105">
+            {/* The scale class slightly zooms the image, effectively cropping the edges */}
             <Image
               src="/logo.png"
               alt="Rajasthalii Logo"
               width={160}
               height={160}
-              className="object-contain w-28 h-28 sm:w-36 sm:h-36"
+              className="object-cover w-full h-full scale-[1.15]"
               priority
             />
+          </Link>
+
+          <Link href="/" className="hidden sm:flex flex-col group">
+            <h1 className="text-xl lg:text-2xl font-bold tracking-[0.2em] text-[#16301d] font-[family-name:var(--font-heading)] leading-none transition-colors duration-300 group-hover:text-[#7d1f1f]">
+              Rajasthalii
+            </h1>
+            <p className="text-[8px] tracking-[0.4em] text-neutral-500 uppercase font-semibold font-[family-name:var(--font-body)] mt-1.5">
+              Heritage • Elegance • Tradition
+            </p>
           </Link>
         </div>
 
