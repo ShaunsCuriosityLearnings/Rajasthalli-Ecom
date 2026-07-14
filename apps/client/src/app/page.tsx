@@ -20,7 +20,17 @@ const Homepage = async ({
       fetch(`${baseUrl}/hero`, { cache: "no-store" }),
     ]);
 
-    if (mcRes.ok) mainCategories = await mcRes.json();
+    if (mcRes.ok) {
+      mainCategories = await mcRes.json();
+      // Ensure "Womens" category appears first
+      mainCategories.sort((a, b) => {
+        const aIsWomens = a.name.toLowerCase() === "womens" || a.slug.toLowerCase() === "womens";
+        const bIsWomens = b.name.toLowerCase() === "womens" || b.slug.toLowerCase() === "womens";
+        if (aIsWomens && !bIsWomens) return -1;
+        if (!aIsWomens && bIsWomens) return 1;
+        return 0;
+      });
+    }
     if (heroRes.ok) heroSlides = await heroRes.json();
   } catch (error) {
     console.error("Error fetching homepage initial data:", error);
