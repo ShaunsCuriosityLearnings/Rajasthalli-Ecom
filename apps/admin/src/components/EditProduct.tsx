@@ -165,26 +165,27 @@ const EditProduct = ({ product }: EditProductProps) => {
     },
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
-        // Fetch Main Categories
-        const mcRes = await fetch(`${baseUrl}/maincategory`);
-        if (mcRes.ok) {
-          const mcData = await mcRes.json();
-          setMainCategories(mcData);
-        }
-        // Fetch Categories
-        const catRes = await fetch(`${baseUrl}/category`);
-        if (catRes.ok) {
-          const catData = await catRes.json();
-          setAllCategories(catData);
-        }
-      } catch (error) {
-        console.error("Error fetching categories data:", error);
+  const fetchData = async () => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
+      // Fetch Main Categories
+      const mcRes = await fetch(`${baseUrl}/maincategory`);
+      if (mcRes.ok) {
+        const mcData = await mcRes.json();
+        setMainCategories(mcData);
       }
-    };
+      // Fetch Categories
+      const catRes = await fetch(`${baseUrl}/category`);
+      if (catRes.ok) {
+        const catData = await catRes.json();
+        setAllCategories(catData);
+      }
+    } catch (error) {
+      console.error("Error fetching categories data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
