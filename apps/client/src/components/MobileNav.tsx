@@ -5,6 +5,7 @@ import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MainCategoryType } from "@repo/types";
+import { createPortal } from "react-dom";
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,26 +61,25 @@ export default function MobileNav() {
         <Menu className="w-6 h-6" />
       </button>
 
-      {/* Backdrop */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-[100] lg:hidden transition-opacity"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+      {/* Portal for Backdrop and Drawer */}
+      {isOpen && typeof document !== "undefined" && createPortal(
+        <>
+          <div 
+            className="fixed inset-0 bg-black/50 z-[999] lg:hidden transition-opacity"
+            onClick={() => setIsOpen(false)}
+          />
 
-      {/* Drawer */}
-      <div 
-        className={`fixed top-0 left-0 h-full w-[80%] max-w-sm bg-[#faf7f2] z-[101] shadow-2xl transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-5 flex justify-between items-center border-b border-[#c89b3c]/20">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-xl tracking-widest text-[#16301d]">MENU</span>
-          <button onClick={() => setIsOpen(false)} className="p-2 text-neutral-500 hover:text-[#7d1f1f]">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
+          <div 
+            className={`fixed top-0 left-0 h-[100dvh] w-[80%] max-w-sm bg-[#faf7f2] z-[1000] shadow-2xl transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto ${
+              isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <div className="p-5 flex justify-between items-center border-b border-[#c89b3c]/20">
+              <span className="font-[family-name:var(--font-heading)] font-bold text-xl tracking-widest text-[#16301d]">MENU</span>
+              <button onClick={() => setIsOpen(false)} className="p-2 text-neutral-500 hover:text-[#7d1f1f]">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
 
         <div className="flex flex-col py-4">
           <Link 
@@ -132,6 +132,7 @@ export default function MobileNav() {
           })}
         </div>
       </div>
+      </>, document.body)}
     </>
   );
 }
