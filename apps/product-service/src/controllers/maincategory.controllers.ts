@@ -2,28 +2,44 @@ import { prisma, Prisma } from "@repo/productdb";
 import { Request, Response } from "express";
 
 export const createMaincategory = async (req: Request, res: Response) => {
-  const data: Prisma.MainCategoryCreateInput = req.body;
+  try {
+    const data: Prisma.MainCategoryCreateInput = req.body;
 
-  const mainCategory = await prisma.mainCategory.create({
-    data,
-  });
+    const mainCategory = await prisma.mainCategory.create({
+      data,
+    });
 
-  res.status(201).json(mainCategory);
+    res.status(201).json(mainCategory);
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return res.status(400).json({ message: "A main category with this name/slug already exists." });
+    }
+    console.error("Error creating main category:", error);
+    res.status(500).json({ message: "Failed to create main category." });
+  }
 };
 
 export const updateMaincategory = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const data: Prisma.MainCategoryUpdateInput = req.body;
+    const data: Prisma.MainCategoryUpdateInput = req.body;
 
-  const mainCategory = await prisma.mainCategory.update({
-    where: {
-      id: Number(id),
-    },
-    data,
-  });
+    const mainCategory = await prisma.mainCategory.update({
+      where: {
+        id: Number(id),
+      },
+      data,
+    });
 
-  res.status(200).json(mainCategory);
+    res.status(200).json(mainCategory);
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return res.status(400).json({ message: "A main category with this name/slug already exists." });
+    }
+    console.error("Error updating main category:", error);
+    res.status(500).json({ message: "Failed to update main category." });
+  }
 };
 
 export const deleteMaincategory = async (req: Request, res: Response) => {

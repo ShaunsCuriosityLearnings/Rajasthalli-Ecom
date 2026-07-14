@@ -2,46 +2,62 @@ import { Request, Response } from "express";
 import { prisma, Prisma } from "@repo/productdb";
 
 export const createCategory = async (req: Request, res: Response) => {
-  const { name, slug, mainCategoryId, imageUrl } = req.body;
+  try {
+    const { name, slug, mainCategoryId, imageUrl } = req.body;
 
-  const category = await prisma.category.create({
-    data: {
-      name,
-      slug,
-      mainCategoryId: mainCategoryId ? Number(mainCategoryId) : null,
-      imageUrl: imageUrl || null,
-    },
-    include: {
-      mainCategory: true,
-    },
-  });
+    const category = await prisma.category.create({
+      data: {
+        name,
+        slug,
+        mainCategoryId: mainCategoryId ? Number(mainCategoryId) : null,
+        imageUrl: imageUrl || null,
+      },
+      include: {
+        mainCategory: true,
+      },
+    });
 
-  res.status(201).json(category);
+    res.status(201).json(category);
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return res.status(400).json({ message: "A category with this slug already exists." });
+    }
+    console.error("Error creating category:", error);
+    res.status(500).json({ message: "Failed to create category." });
+  }
 };
 
 export const updateCategory = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, slug, mainCategoryId, imageUrl } = req.body;
+  try {
+    const { id } = req.params;
+    const { name, slug, mainCategoryId, imageUrl } = req.body;
 
-  const updateData: any = {};
-  if (name !== undefined) updateData.name = name;
-  if (slug !== undefined) updateData.slug = slug;
-  if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
-  if (mainCategoryId !== undefined) {
-    updateData.mainCategoryId = mainCategoryId ? Number(mainCategoryId) : null;
+    const updateData: any = {};
+    if (name !== undefined) updateData.name = name;
+    if (slug !== undefined) updateData.slug = slug;
+    if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+    if (mainCategoryId !== undefined) {
+      updateData.mainCategoryId = mainCategoryId ? Number(mainCategoryId) : null;
+    }
+
+    const category = await prisma.category.update({
+      where: {
+        id: Number(id),
+      },
+      data: updateData,
+      include: {
+        mainCategory: true,
+      },
+    });
+
+    res.status(200).json(category);
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return res.status(400).json({ message: "A category with this slug already exists." });
+    }
+    console.error("Error updating category:", error);
+    res.status(500).json({ message: "Failed to update category." });
   }
-
-  const category = await prisma.category.update({
-    where: {
-      id: Number(id),
-    },
-    data: updateData,
-    include: {
-      mainCategory: true,
-    },
-  });
-
-  res.status(200).json(category);
 };
 
 export const deleteCategory = async (req: Request, res: Response) => {
