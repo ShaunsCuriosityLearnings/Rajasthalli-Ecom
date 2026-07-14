@@ -25,16 +25,16 @@ const Navbar = () => {
         <span>✨ Authentic Indian Wear for Women | Handcrafted Traditional Wear in Mumbai ✨</span>
       </div>
 
-      <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-12 py-3.5">
+      <div className="relative flex items-center justify-between px-4 sm:px-6 lg:px-12 py-2">
         {/* Left Actions: Logo & Search Bar */}
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center justify-center shrink-0 border border-[#c89b3c]/20 bg-white p-2 rounded-xl shadow-xs hover:border-[#c89b3c]/50 transition-all duration-300 w-20 h-20 sm:w-24 sm:h-24">
+          <Link href="/" className="flex items-center shrink-0 transition-transform duration-300 hover:scale-103">
             <Image
               src="/logo.jpeg"
               alt="Rajasthalii Logo"
-              width={110}
-              height={110}
-              className="object-contain w-full h-full hover:scale-105 transition-transform duration-300"
+              width={120}
+              height={120}
+              className="object-contain w-20 h-20 sm:w-24 sm:h-24 rounded-lg"
             />
           </Link>
           <Suspense fallback={<div className="w-32 h-8 bg-neutral-200/30 animate-pulse rounded-full" />}>

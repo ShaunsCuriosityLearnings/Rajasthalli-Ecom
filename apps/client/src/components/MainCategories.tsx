@@ -91,7 +91,7 @@ const MainCategories = () => {
           {/* Custom New Arrivals Link */}
           <Link
             href="/products?sort=newest"
-            className="group relative flex items-center gap-1.5 cursor-pointer outline-hidden py-4"
+            className="group relative flex items-center gap-1.5 cursor-pointer outline-hidden py-2"
           >
             <span className="uppercase tracking-[0.25em] text-[10px] lg:text-[11px] transition-all duration-300 font-[family-name:var(--font-body)] text-neutral-600 font-light group-hover:text-[#7d1f1f]">
               New Arrivals
@@ -107,7 +107,7 @@ const MainCategories = () => {
             return (
               <div
                 key={category.slug}
-                className="relative py-4"
+                className="relative py-2"
                 onMouseEnter={() => setHoveredCategory(category.slug)}
                 onMouseLeave={() => setHoveredCategory(null)}
               >
