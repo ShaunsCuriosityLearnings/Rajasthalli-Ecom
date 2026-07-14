@@ -83,19 +83,20 @@ const AddCategory = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchMainCategories = async () => {
-      try {
-        const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
-        const res = await fetch(`${baseUrl}/maincategory`);
-        if (res.ok) {
-          const data = await res.json();
-          setMainCategories(data);
-        }
-      } catch (error) {
-        console.error("Error fetching main categories:", error);
+  const fetchMainCategories = async () => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
+      const res = await fetch(`${baseUrl}/maincategory`);
+      if (res.ok) {
+        const data = await res.json();
+        setMainCategories(data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching main categories:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchMainCategories();
   }, []);
 
@@ -198,6 +199,9 @@ const AddCategory = () => {
                   <FormItem>
                     <FormLabel>Main Category (Optional)</FormLabel>
                     <Select
+                      onOpenChange={(open) => {
+                        if (open) fetchMainCategories();
+                      }}
                       onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}

@@ -342,6 +342,9 @@ const AddProduct = () => {
                   <FormLabel>Main Category</FormLabel>
 
                   <Select
+                    onOpenChange={(open) => {
+                      if (open) fetchData();
+                    }}
                     onValueChange={(value) => {
                       field.onChange(value);
                       form.setValue("category", "");
@@ -376,6 +379,9 @@ const AddProduct = () => {
                   <FormLabel>Category</FormLabel>
 
                   <Select
+                    onOpenChange={(open) => {
+                      if (open) fetchData();
+                    }}
                     onValueChange={field.onChange}
                     value={field.value}
                     disabled={!selectedMainCategory}
