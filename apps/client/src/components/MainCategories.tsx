@@ -36,23 +36,18 @@ const MainCategories = () => {
   const selectedMainCategory = searchParams.get("mainCategory") || (mainCategories[0]?.slug || "");
 
   const handleChange = (slug: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
     params.set("mainCategory", slug);
-    params.delete("category");
 
-    router.push(`${pathname}?${params.toString()}`, {
-      scroll: false,
-    });
+    router.push(`/products?${params.toString()}`);
   };
 
   const handleSubClick = (mainSlug: string, subSlug: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
     params.set("mainCategory", mainSlug);
     params.set("category", subSlug);
 
-    router.push(`${pathname}?${params.toString()}`, {
-      scroll: false,
-    });
+    router.push(`/products?${params.toString()}`);
     setHoveredCategory(null);
   };
 
@@ -91,7 +86,7 @@ const MainCategories = () => {
           {/* Custom New Arrivals Link */}
           <Link
             href="/products?sort=newest"
-            className="group relative flex items-center gap-1.5 cursor-pointer outline-hidden py-2"
+            className="group relative flex items-center gap-1.5 cursor-pointer outline-hidden py-4"
           >
             <span className="uppercase tracking-[0.25em] text-[10px] lg:text-[11px] transition-all duration-300 font-[family-name:var(--font-body)] text-neutral-600 font-light group-hover:text-[#7d1f1f]">
               New Arrivals
@@ -107,7 +102,7 @@ const MainCategories = () => {
             return (
               <div
                 key={category.slug}
-                className="relative py-2"
+                className="relative py-4"
                 onMouseEnter={() => setHoveredCategory(category.slug)}
                 onMouseLeave={() => setHoveredCategory(null)}
               >
