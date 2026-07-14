@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import { Bell, Home } from "lucide-react";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import MainCategories from "./MainCategories";
+import MobileNav from "./MobileNav";
 import { Show, SignInButton } from "@clerk/nextjs";
 import ProfileButton from "./ProfileButton";
 import { usePathname } from "next/navigation";
@@ -27,7 +28,8 @@ const Navbar = () => {
 
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-2 gap-4">
         {/* Left: Logo & Brand Name */}
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <MobileNav />
           <Link href="/" className="relative flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105">
             {/* The scale class slightly zooms the image, effectively cropping the edges */}
             <Image

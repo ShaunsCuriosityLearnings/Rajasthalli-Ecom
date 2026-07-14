@@ -68,7 +68,7 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
   if (!slide) return null;
 
   return (
-    <section className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px] overflow-hidden bg-neutral-100">
+    <section className="relative w-full aspect-[16/7] sm:aspect-auto sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px] overflow-hidden bg-neutral-100">
       {/* Slide Image wrapped in Redirection Link */}
       <Link href={slide.linkUrl} className="block w-full h-full relative cursor-pointer">
         <div className="absolute inset-0 transition-all duration-700">
@@ -77,7 +77,7 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
             alt={`Hero Banner ${slide.id}`}
             fill
             priority
-            className={`object-cover transition-all duration-[600ms] ease-in-out scale-100 ${
+            className={`object-contain sm:object-cover transition-all duration-[600ms] ease-in-out scale-100 ${
               isTransitioning ? "opacity-30 scale-98" : "opacity-100 scale-100"
             }`}
           />
