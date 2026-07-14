@@ -56,8 +56,8 @@ const CategoriesShowcase = ({ subcategories, mainCategorySlug, mainCategoryName 
   if (subcategories.length === 0) return null;
 
   return (
-    <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-      <div className="flex items-center justify-between mb-8">
+    <section className="py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl sm:text-3.5xl font-bold text-[#16301d] font-[family-name:var(--font-heading)]">
             Shop by <span className="text-[#7d1f1f] italic">{mainCategoryName || "Category"}</span>
