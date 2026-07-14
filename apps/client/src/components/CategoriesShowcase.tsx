@@ -15,9 +15,10 @@ interface SubCategory {
 interface CategoriesShowcaseProps {
   subcategories: SubCategory[];
   mainCategorySlug: string;
+  mainCategoryName?: string;
 }
 
-const CategoriesShowcase = ({ subcategories, mainCategorySlug }: CategoriesShowcaseProps) => {
+const CategoriesShowcase = ({ subcategories, mainCategorySlug, mainCategoryName }: CategoriesShowcaseProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -59,7 +60,7 @@ const CategoriesShowcase = ({ subcategories, mainCategorySlug }: CategoriesShowc
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl sm:text-3.5xl font-bold text-[#16301d] font-[family-name:var(--font-heading)]">
-            Shop by <span className="text-[#7d1f1f] italic">Category</span>
+            Shop by <span className="text-[#7d1f1f] italic">{mainCategoryName || "Category"}</span>
           </h2>
           <div className="h-0.5 w-16 bg-[#c89b3c]/60 mt-2" />
         </div>

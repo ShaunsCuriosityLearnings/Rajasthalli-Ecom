@@ -26,14 +26,22 @@ const Homepage = async ({
     console.error("Error fetching homepage initial data:", error);
   }
 
-  const activeMainCategorySlug = params.mainCategory || mainCategories[0]?.slug || "";
-  const activeMainCategory = mainCategories.find((mc: any) => mc.slug === activeMainCategorySlug) || mainCategories[0];
-  const subcategories = activeMainCategory?.categories || [];
-
   return (
     <div>
       <HeroSection slides={heroSlides} />
-      <CategoriesShowcase subcategories={subcategories} mainCategorySlug={activeMainCategorySlug} />
+      
+      {mainCategories.map((mc: any) => {
+        if (!mc.categories || mc.categories.length === 0) return null;
+        return (
+          <CategoriesShowcase 
+            key={mc.id || mc.slug} 
+            subcategories={mc.categories} 
+            mainCategorySlug={mc.slug}
+            mainCategoryName={mc.name}
+          />
+        );
+      })}
+
       <ProductList category={category} params="homepage" />
       <SeoSections />
     </div>
