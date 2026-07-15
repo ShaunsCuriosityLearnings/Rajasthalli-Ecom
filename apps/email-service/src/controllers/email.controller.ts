@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Order } from "@repo/orderdb";
-import { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } from "../services/email.service.js";
+import { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail, sendMail } from "../services/email.service.js";
 
 export const sendOrderConfirmation = async (req: Request, res: Response) => {
   const { orderId } = req.body;
@@ -42,6 +42,22 @@ export const sendOrderStatusUpdate = async (req: Request, res: Response) => {
     return res.status(200).json({ success: true, message: "Status update email sent" });
   } catch (error: any) {
     console.error(`[Email Service] Failed to send status update email for ${orderId}:`, error.message || error);
+    return res.status(500).json({ success: false, message: error.message || "Failed to send email" });
+  }
+};
+
+export const sendCustomEmail = async (req: Request, res: Response) => {
+  const { to, subject, html } = req.body;
+  if (!to || !subject || !html) {
+    return res.status(400).json({ success: false, message: "to, subject, and html are required" });
+  }
+
+  try {
+    console.log(`[Email Service] Sending custom email to: ${to}`);
+    await sendMail({ to, subject, html });
+    return res.status(200).json({ success: true, message: "Custom email sent successfully" });
+  } catch (error: any) {
+    console.error(`[Email Service] Failed to send custom email:`, error.message || error);
     return res.status(500).json({ success: false, message: error.message || "Failed to send email" });
   }
 };

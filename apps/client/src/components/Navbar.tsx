@@ -75,9 +75,9 @@ const Navbar = () => {
             </Link>
 
             <Link
-              href="/notifications"
+              href="/orders"
               className="p-2 rounded-full hover:bg-neutral-800/5 text-[#16301d] transition-colors duration-300 group"
-              title="Notifications"
+              title="Orders"
             >
               <Bell className="w-5 h-5 text-[#16301d] group-hover:text-[#7d1f1f] transition-colors duration-300" />
             </Link>

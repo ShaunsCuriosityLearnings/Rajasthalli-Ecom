@@ -30,34 +30,11 @@ export default function FAQPage() {
       )
     },
     {
-      question: "Why Shop With Us",
+      question: "What is your shipping, delivery, and return policy?",
       answer: (
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-semibold text-neutral-800 text-sm sm:text-base">Hassle-Free Returns</h4>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">
-              Shop with absolute confidence thanks to our stress-free 7-day return and exchange policy on all standard sizing orders.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-neutral-800 text-sm sm:text-base">Curated Quality</h4>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">
-              From our traditional apparel to our hand-dyed bedsheets, every single item is carefully selected and finished in Mumbai to ensure the highest standard of quality.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-neutral-800 text-sm sm:text-base">Fair & Transparent Shipping</h4>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">
-              No hidden fees—shipping charges are calculated transparently based on your location and order total, ensuring you always get a fair rate.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-neutral-800 text-sm sm:text-base">Home & Wardrobe Elegance</h4>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">
-              We are your one-stop shop for both personal style and home aesthetics, seamlessly bringing the warmth of Rajasthani culture into your daily life.
-            </p>
-          </div>
-        </div>
+        <p>
+          We offer shipping across India with rates calculated transparently based on your location and order total, ensuring you always get a fair rate. Standard delivery takes 3 to 5 business days. We also provide a hassle-free 7-day return and exchange policy on all standard sizing orders, ensuring you can shop with absolute confidence.
+        </p>
       )
     }
   ];

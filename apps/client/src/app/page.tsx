@@ -1,6 +1,7 @@
 import ProductList from "@/components/ProductList";
 import HeroSection from "@/components/HeroSection";
 import CategoriesShowcase from "@/components/CategoriesShowcase";
+import WhyShopWithUs from "@/components/WhyShopWithUs";
 
 const Homepage = async ({
   searchParams,
@@ -52,6 +53,7 @@ const Homepage = async ({
       })}
 
       <ProductList category={category} params="homepage" />
+      <WhyShopWithUs />
     </div>
   );
 };
