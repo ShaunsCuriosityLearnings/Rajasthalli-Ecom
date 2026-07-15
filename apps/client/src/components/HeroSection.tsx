@@ -65,14 +65,6 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
     }, 300);
   };
 
-  const handleTabClick = (index: number) => {
-    if (index === activeSlide || isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveSlide(index);
-      setIsTransitioning(false);
-    }, 300);
-  };
 
   const slide = activeSlides[activeSlide] || activeSlides[0] || fallbackSlides[0];
 
@@ -115,24 +107,6 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
         </>
       )}
 
-      {/* Navigation Dots (Replacing pills for clean minimal look) */}
-      {activeSlides.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 bg-white/70 backdrop-blur-xs px-4 py-2.5 rounded-full border border-white/20 shadow-xs z-10">
-          {activeSlides.map((item, idx) => {
-            const isTabActive = activeSlide === idx;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleTabClick(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  isTabActive ? "w-8 bg-[#16301d]" : "w-2 bg-gray-400/60 hover:bg-gray-400"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            );
-          })}
-        </div>
-      )}
     </section>
   );
 };
