@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SlideData {
   id: number;
@@ -47,6 +48,7 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
   }, [activeSlide, activeSlides.length]);
 
   const handleNextSlide = () => {
+    if (isTransitioning) return;
     setIsTransitioning(true);
     setTimeout(() => {
       setActiveSlide((prev) => (prev + 1) % activeSlides.length);
@@ -54,8 +56,17 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
     }, 300);
   };
 
+  const handlePrevSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
   const handleTabClick = (index: number) => {
-    if (index === activeSlide) return;
+    if (index === activeSlide || isTransitioning) return;
     setIsTransitioning(true);
     setTimeout(() => {
       setActiveSlide(index);
@@ -68,7 +79,7 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
   if (!slide) return null;
 
   return (
-    <section className="relative w-full aspect-[16/7] sm:aspect-auto sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px] overflow-hidden bg-neutral-100">
+    <section className="relative w-full aspect-[16/7] sm:aspect-auto sm:h-[420px] md:h-[480px] lg:h-[540px] xl:h-[580px] overflow-hidden bg-neutral-100 group">
       {/* Slide Image wrapped in Redirection Link */}
       <Link href={slide.linkUrl} className="block w-full h-full relative cursor-pointer">
         <div className="absolute inset-0 transition-all duration-700">
@@ -83,6 +94,26 @@ const HeroSection = ({ slides = [] }: HeroSectionProps) => {
           />
         </div>
       </Link>
+
+      {/* Prev/Next Controls */}
+      {activeSlides.length > 1 && (
+        <>
+          <button
+            onClick={handlePrevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/70 hover:bg-white text-[#16301d] transition-all duration-300 hover:scale-105 shadow-md cursor-pointer z-20 flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100"
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            onClick={handleNextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/70 hover:bg-white text-[#16301d] transition-all duration-300 hover:scale-105 shadow-md cursor-pointer z-20 flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100"
+            aria-label="Next Slide"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </>
+      )}
 
       {/* Navigation Dots (Replacing pills for clean minimal look) */}
       {activeSlides.length > 1 && (

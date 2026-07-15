@@ -139,7 +139,7 @@ export const getProduct = async (req: Request, res: Response) => {
 };
 
 export const getProducts = async (req: Request, res: Response) => {
-  const { sort, category, limit, search } = req.query;
+  const { sort, category, limit, search, size } = req.query;
 
   const orderBy = (() => {
     switch (sort) {
@@ -162,6 +162,11 @@ export const getProducts = async (req: Request, res: Response) => {
       ...(category && {
         category: {
           slug: String(category),
+        },
+      }),
+      ...(size && {
+        sizes: {
+          has: String(size),
         },
       }),
       ...(search && {

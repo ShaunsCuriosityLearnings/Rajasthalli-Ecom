@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     "Handcrafted Sarees",
     "Women's Fashion",
   ],
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

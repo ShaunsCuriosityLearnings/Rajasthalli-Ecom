@@ -72,7 +72,7 @@ export default function ContactPage() {
             <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #374151; white-space: pre-wrap;">${formData.message}</p>
           </div>
           <p style="font-size: 12px; color: #9ca3af; margin-top: 25px; text-align: center; border-top: 1px solid #f3f4f6; padding-top: 15px;">
-            Rajasthalii Support Automation • Mumbai Boutique Desk
+            Rajasthalii Support Automation • Mumbai Shop Desk
           </p>
         </div>
       `;
@@ -95,11 +95,11 @@ export default function ContactPage() {
             ${formData.orderId ? `<p style="font-size: 14px; color: #4b5563; background-color: #f3f4f6; padding: 10px; border-radius: 6px; display: inline-block;"><strong>Associated Order ID:</strong> #${formData.orderId}</p>` : ""}
           </div>
           <div style="margin-top: 30px; border-top: 1px solid #f3f4f6; padding-top: 20px; font-size: 13px; color: #6b7280; line-height: 1.5;">
-            <p style="margin: 0; font-weight: bold; color: #18320b;">Rajasthalii Mumbai Boutique</p>
+            <p style="margin: 0; font-weight: bold; color: #18320b;">Rajasthalii Mumbai Shop</p>
             <p style="margin: 4px 0 0 0;">
-              Shop No. 3, Building 3, Sardar Vallabhai Patel Rd,<br />
-              Ram Nagar, Takshila Colony, Indira Nagar,<br />
-              Andheri East, Mumbai, Maharashtra 400093
+              Shopno3, Dheeraj Garden, CHS,<br />
+              Poonam Nagar, Andheri East,<br />
+              Mumbai-93
             </p>
             <p style="margin: 10px 0 0 0; color: #7d1f1f;">Hours: 10:00 AM - 9:30 PM (Daily)</p>
           </div>
@@ -172,7 +172,7 @@ export default function ContactPage() {
           Customer Support
         </h1>
         <p className="mt-3 text-sm text-neutral-500 max-w-lg mx-auto leading-relaxed">
-          Have queries about shipping, exchanges, or bespoke bridal options? Reach out, and our Mumbai boutique representatives will be happy to help.
+          Have queries about shipping, exchanges, or bespoke bridal options? Reach out, and our Mumbai shop representatives will be happy to help.
         </p>
       </div>
 
@@ -182,7 +182,7 @@ export default function ContactPage() {
         <div className="lg:col-span-5 flex flex-col justify-between border border-neutral-200/60 rounded-3xl p-6 md:p-8 bg-white shadow-xs">
           <div>
             <h2 className="text-2xl font-bold text-[#18320b] font-[family-name:var(--font-heading)] tracking-wide border-b border-neutral-100 pb-4">
-              Boutique Information
+              Shop Information
             </h2>
             <p className="text-neutral-500 text-sm mt-4 leading-relaxed">
               We sell authentic Indian wear for women—featuring hand-dyed Bandhani, royal poshas, and hand-embroidered heritage clothing. Visit our Mumbai showroom to experience the quality firsthand.
@@ -197,10 +197,10 @@ export default function ContactPage() {
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400">Address</h4>
                   <p className="text-sm font-semibold text-neutral-700 mt-1 leading-relaxed">
-                    Rajasthalii Mumbai Boutique<br />
-                    Shop No. 3, Building 3, Sardar Vallabhai Patel Rd,<br />
-                    Ram Nagar, Takshila Colony, Indira Nagar,<br />
-                    Andheri East, Mumbai, Maharashtra 400093
+                    Rajasthalii Mumbai Shop<br />
+                    Shopno3, Dheeraj Garden, CHS,<br />
+                    Poonam Nagar, Andheri East,<br />
+                    Mumbai-93
                   </p>
                 </div>
               </div>
@@ -218,6 +218,19 @@ export default function ContactPage() {
                 </div>
               </div>
 
+              {/* Contact Number */}
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#16301d]/10 rounded-xl text-[#16301d] shrink-0 mt-0.5">
+                  <Phone size={18} />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400">Contact Number</h4>
+                  <p className="text-sm font-semibold text-neutral-700 mt-1">
+                    +91 9136663940
+                  </p>
+                </div>
+              </div>
+
               {/* Email */}
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-[#7d1f1f]/10 rounded-xl text-[#7d1f1f] shrink-0 mt-0.5">
@@ -226,7 +239,7 @@ export default function ContactPage() {
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400">Email Address</h4>
                   <p className="text-sm font-semibold text-neutral-700 mt-1">
-                    support@rajasthalii.com
+                    kk.rajasthali@gmail.com
                   </p>
                 </div>
               </div>

@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-[#faf7f2]/95 backdrop-blur-md border-b border-[#c89b3c]/15 shadow-sm flex flex-col">
       {/* Announcement Bar */}
       <div className="bg-[#7d1f1f] text-[#faf7f2] py-2 px-4 text-center text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase flex items-center justify-center gap-2 border-b border-[#c89b3c]/10">
-        <span>✨ Authentic Indian Wear for Women | Handcrafted Traditional Wear in Mumbai ✨</span>
+        <span>Traditional wear for her | Rajasthani bedsheets & more | Mumbai</span>
       </div>
 
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-2 gap-4">

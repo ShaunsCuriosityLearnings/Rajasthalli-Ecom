@@ -201,14 +201,7 @@ const ProductPage = async ({
           <hr className="border-neutral-200" />
 
           {/* Trust Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-[#a2b58c]/5 border border-neutral-100 rounded-2xl p-4 flex flex-col items-center text-center hover:shadow-md transition-shadow">
-              <div className="h-10 w-10 rounded-full bg-[#18320b]/10 flex items-center justify-center mb-3">
-                <Truck size={18} className="text-[#18320b]" />
-              </div>
-              <h4 className="font-semibold text-xs text-neutral-800 mb-1">Free Delivery</h4>
-              <p className="text-[10px] text-neutral-500 leading-normal">Free express shipping across all states in India</p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             <div className="bg-[#a2b58c]/5 border border-neutral-100 rounded-2xl p-4 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="h-10 w-10 rounded-full bg-[#18320b]/10 flex items-center justify-center mb-3">
@@ -227,19 +220,7 @@ const ProductPage = async ({
             </div>
           </div>
 
-          {/* Secure Payment Card */}
-          <div className="border border-[#c89b3c]/20 bg-neutral-50/50 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <h3 className="font-bold text-xs text-neutral-800 mb-1 uppercase tracking-wider">Payment Partners</h3>
-              <p className="text-[10px] text-neutral-500">Fully encrypted transactions backed by secure UPI, Cards, and NetBanking</p>
-            </div>
 
-            <div className="flex gap-3 bg-white px-4 py-2 rounded-xl border border-neutral-200 shadow-2xs items-center">
-              <Image src="/cards.png" alt="Accepted Cards" width={80} height={40} className="object-contain" />
-              <div className="w-px h-6 bg-neutral-200 mx-2" />
-              <Image src="/stripe.png" alt="Stripe Secured" width={60} height={30} className="object-contain" />
-            </div>
-          </div>
 
           {/* Highlights & Heritage Info */}
           <div className="bg-[#a2b58c]/5 border border-[#c89b3c]/15 rounded-3xl p-6 md:p-8">

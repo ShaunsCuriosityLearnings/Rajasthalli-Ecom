@@ -10,11 +10,11 @@ export default function SeoSections() {
   const faqs = [
     {
       question: "What makes Rajasthalii traditional Indian wear authentic?",
-      answer: "Rajasthalii specializes in authentic, artisan-direct traditional wear for women. Every piece—from our hand-dyed Bandhani sarees from Jodhpur to our intricate Rajputi Poshaks—is crafted by master artisans in Rajasthan and finished in our Mumbai boutique, keeping heritage techniques alive."
+      answer: "Rajasthalii specializes in authentic, artisan-direct traditional wear for women. Every piece—from our hand-dyed Bandhani sarees from Jodhpur to our intricate Rajputi Poshaks—is crafted by master artisans in Rajasthan and finished in our Mumbai shop, keeping heritage techniques alive."
     },
     {
       question: "Do you offer custom tailoring and bridal services?",
-      answer: "Yes, we offer bespoke tailoring and custom sizing, particularly for Rajputi Poshaks and bridal Ghagra Cholis. You can visit our boutique in Andheri East, Mumbai, or raise a customization query through our Customer Support page to consult with our designers."
+      answer: "Yes, we offer bespoke tailoring and custom sizing, particularly for Rajputi Poshaks and bridal Ghagra Cholis. You can visit our shop in Andheri East, Mumbai, or raise a customization query through our Customer Support page to consult with our designers."
     },
     {
       question: "Where is the Rajasthalii showroom located in Mumbai?",
@@ -62,7 +62,7 @@ export default function SeoSections() {
             Frequently Asked Questions
           </h2>
           <p className="text-neutral-500 text-xs mt-2">
-            Have questions about orders, sizing, or our Mumbai boutique location? Find quick answers here.
+            Have questions about orders, sizing, or our Mumbai shop location? Find quick answers here.
           </p>
         </div>
 

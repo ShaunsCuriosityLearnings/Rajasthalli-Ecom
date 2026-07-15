@@ -60,7 +60,7 @@ export default function TermsAndConditionsPage() {
             <h2>3. Shipping and Deliveries</h2>
           </div>
           <p className="text-neutral-600 leading-relaxed text-sm">
-            Rajasthalii coordinates shipments from our physical boutique in Mumbai. Shipping rates and delivery timelines vary depending on your location. Standard delivery in metro cities ranges from 3-5 business days. Please refer to our Shipping Policy for specific rates and exclusions.
+            Rajasthalii coordinates shipments from our physical shop in Mumbai. Shipping rates and delivery timelines vary depending on your location. Standard delivery in metro cities ranges from 3-5 business days. Please refer to our Shipping Policy for specific rates and exclusions.
           </p>
         </section>
 
@@ -80,15 +80,15 @@ export default function TermsAndConditionsPage() {
           <div className="space-y-2.5">
             <div className="flex items-center gap-2 text-[#7d1f1f] font-semibold text-sm uppercase tracking-wider">
               <MapPin size={16} />
-              <span>Boutique Headquarters</span>
+              <span>Shop Headquarters</span>
             </div>
             <h3 className="text-lg font-bold text-[#18320b] font-[family-name:var(--font-heading)]">
-              Rajasthalii Mumbai Boutique
+              Rajasthalii Mumbai Shop
             </h3>
             <p className="text-sm text-neutral-600 leading-relaxed max-w-md">
-              Shop No. 3, Building 3, Sardar Vallabhai Patel Rd,<br />
-              Ram Nagar, Takshila Colony, Indira Nagar,<br />
-              Andheri East, Mumbai, Maharashtra 400093
+              Shopno3, Dheeraj Garden, CHS,<br />
+              Poonam Nagar, Andheri East,<br />
+              Mumbai-93
             </p>
           </div>
           <div className="flex flex-col gap-3 w-full md:w-auto">

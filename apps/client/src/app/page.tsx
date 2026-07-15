@@ -1,6 +1,5 @@
 import ProductList from "@/components/ProductList";
 import HeroSection from "@/components/HeroSection";
-import SeoSections from "@/components/SeoSections";
 import CategoriesShowcase from "@/components/CategoriesShowcase";
 
 const Homepage = async ({
@@ -53,7 +52,6 @@ const Homepage = async ({
       })}
 
       <ProductList category={category} params="homepage" />
-      <SeoSections />
     </div>
   );
 };

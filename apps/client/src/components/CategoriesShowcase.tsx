@@ -23,6 +23,8 @@ const CategoriesShowcase = ({ subcategories, mainCategorySlug, mainCategoryName 
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
+  const displayName = mainCategoryName?.toLowerCase() === "womens" ? "Womens Wear" : mainCategoryName;
+
   const checkScroll = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
@@ -60,7 +62,7 @@ const CategoriesShowcase = ({ subcategories, mainCategorySlug, mainCategoryName 
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl sm:text-3.5xl font-bold text-[#16301d] font-[family-name:var(--font-heading)]">
-            Shop by <span className="text-[#7d1f1f] italic">{mainCategoryName || "Category"}</span>
+            Shop by <span className="text-[#7d1f1f] italic">{displayName || "Category"}</span>
           </h2>
           <div className="h-0.5 w-16 bg-[#c89b3c]/60 mt-2" />
         </div>

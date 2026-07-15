@@ -167,10 +167,11 @@ import { Suspense } from "react";
 //   },
 // ];
 
-async function fetchData({ category, sort, search, params }: {
+async function fetchData({ category, sort, search, size, params }: {
   category?: string;
   sort?: string;
   search?: string;
+  size?: string;
   params: "homepage" | "products";
 }) {
   const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
@@ -178,6 +179,7 @@ async function fetchData({ category, sort, search, params }: {
   if (category) urlParams.append("category", category);
   if (search) urlParams.append("search", search);
   if (sort) urlParams.append("sort", sort);
+  if (size) urlParams.append("size", size);
   urlParams.append("limit", params === "homepage" ? "10" : "20");
 
   const url = `${baseUrl}/products?${urlParams.toString()}`;
@@ -193,14 +195,16 @@ const ProductList = async ({
   params,
   search,
   sort,
+  size,
 }: {
   category?: string;
   params: "homepage" | "products";
   search?: string;
   sort?: string;
+  size?: string;
 }) => {
 
-  const products = await fetchData({ category, sort, search, params });
+  const products = await fetchData({ category, sort, search, size, params });
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {params === "homepage" && (

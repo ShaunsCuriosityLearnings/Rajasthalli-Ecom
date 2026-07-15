@@ -11,17 +11,24 @@ const Footer = () => {
               Rajasthalii
             </h2>
 
-            <p className="mt-4 text-bg-cream/80 leading-relaxed font-[family-name:var(--font-body)] text-sm">
-              Rajasthalii is an e-commerce clothing store that sells authentic Indian wear for women.
-              Based in Mumbai, our traditional designs blend heritage craftsmanship with contemporary elegance.
-            </p>
+            <div className="mt-4 text-bg-cream/80 leading-relaxed font-[family-name:var(--font-body)] text-sm space-y-3">
+              <p>
+                At Rajasthalii, we bring the vibrant soul and rich heritage of India right to your doorstep. We are an online destination specializing in authentic Indian wear for her and exquisite Rajasthani bedsheets, blending time-honored artistry with modern elegance.
+              </p>
+              <p>
+                Based in Mumbai, our curated collections celebrate the beauty of traditional designs and meticulous craftsmanship. Every piece we offer is a tribute to heritage techniques, thoughtfully selected to bring warmth, color, and grace into your wardrobe and your home.
+              </p>
+              <p>
+                Whether you are dressing up for a special occasion or transforming your living space, Rajasthalii connects you with timeless Indian traditions, reimagined for contemporary life.
+              </p>
+            </div>
 
             <div className="mt-6 text-sm text-bg-cream/70 font-[family-name:var(--font-body)] leading-relaxed">
-              <p className="font-semibold text-accent-gold uppercase tracking-wider text-xs">Mumbai Boutique Location</p>
+              <p className="font-semibold text-accent-gold uppercase tracking-wider text-xs">Mumbai Shop Location</p>
               <p className="mt-1.5">
-                Shop No. 3, Building 3, Sardar Vallabhai Patel Rd,<br />
-                Ram Nagar, Takshila Colony, Indira Nagar,<br />
-                Andheri East, Mumbai, Maharashtra 400093
+                Shopno3, Dheeraj Garden, CHS,<br />
+                Poonam Nagar, Andheri East,<br />
+                Mumbai-93
               </p>
             </div>
           </div>
@@ -107,7 +114,8 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-accent-gold transition-colors duration-200">Instagram</Link>
+            <a href="https://wa.me/919136663940" target="_blank" rel="noopener noreferrer" className="hover:text-accent-gold transition-colors duration-200">WhatsApp</a>
+            <a href="https://www.instagram.com/kk.rajasthali?igsh=ZG4xdDdxYXd5ZWRv" target="_blank" rel="noopener noreferrer" className="hover:text-accent-gold transition-colors duration-200">Instagram</a>
             <Link href="#" className="hover:text-accent-gold transition-colors duration-200">Facebook</Link>
             <Link href="#" className="hover:text-accent-gold transition-colors duration-200">Pinterest</Link>
           </div>
