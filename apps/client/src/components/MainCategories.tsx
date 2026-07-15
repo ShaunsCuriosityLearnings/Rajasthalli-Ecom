@@ -69,15 +69,15 @@ const MainCategories = () => {
         @keyframes slideDown {
           from {
             opacity: 0;
-            transform: translate(-50%, -10px);
+            transform: translateY(-8px);
           }
           to {
             opacity: 1;
-            transform: translate(-50%, 0);
+            transform: translateY(0);
           }
         }
         .animate-slide-down {
-          animation: slideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
       `}</style>
 
@@ -142,25 +142,26 @@ const MainCategories = () => {
                 {/* Subcategories Dropdown (Mega Menu) */}
                 {isHovered && subcats.length > 0 && (
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-1.5 ${
+                    className={`absolute top-full left-0 pt-2 z-50 ${
                       isLarge ? "w-[440px]" : "w-60"
-                    } bg-[#faf7f2]/98 backdrop-blur-md border border-neutral-200 shadow-xl rounded-xl p-5 z-50 animate-slide-down`}
+                    }`}
                   >
-                    <div
-                      className={`grid ${
-                        isLarge ? "grid-cols-2 gap-x-6 gap-y-1.5" : "grid-cols-1 gap-y-1.5"
-                      }`}
-                    >
-                      {subcats.map((sub) => (
-                        <button
-                          key={sub.slug}
-                          onClick={() => handleSubClick(category.slug, sub.slug)}
-                          className="text-left text-xs font-normal tracking-wide text-neutral-700 hover:text-[#7d1f1f] py-2 px-3 rounded-lg hover:bg-neutral-800/5 transition-all duration-200 flex items-center gap-3 group/item outline-hidden w-full cursor-pointer"
-                        >
-                          <span className="w-1 h-1 rounded-full bg-[#c89b3c] group-hover/item:scale-125 transition-transform duration-200" />
-                          {sub.name}
-                        </button>
-                      ))}
+                    <div className="bg-[#faf7f2]/98 backdrop-blur-md border border-neutral-200 shadow-xl rounded-xl p-4 animate-slide-down">
+                      <div
+                        className={`grid ${
+                          isLarge ? "grid-cols-2 gap-x-4 gap-y-1" : "grid-cols-1 gap-y-1"
+                        }`}
+                      >
+                        {subcats.map((sub) => (
+                          <button
+                            key={sub.slug}
+                            onClick={() => handleSubClick(category.slug, sub.slug)}
+                            className="text-left text-xs font-normal tracking-wide text-neutral-700 hover:text-[#7d1f1f] py-1.5 px-3 rounded-lg hover:bg-neutral-800/5 transition-all duration-200 flex items-center gap-2 group/item outline-hidden w-full cursor-pointer"
+                          >
+                            {sub.name}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

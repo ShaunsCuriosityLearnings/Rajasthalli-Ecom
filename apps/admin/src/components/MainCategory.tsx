@@ -29,6 +29,13 @@ import {
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const MainCategory = () => {
   const router = useRouter();
@@ -41,6 +48,7 @@ const MainCategory = () => {
     defaultValues: {
       name: "",
       slug: "",
+      filterType: "apparel",
     },
   });
 
@@ -49,7 +57,7 @@ const MainCategory = () => {
   };
 
   const mutation = useMutation({
-    mutationFn: async (payload: { name: string; slug: string }) => {
+    mutationFn: async (payload: { name: string; slug: string; filterType?: string }) => {
       const token = await getToken();
       const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL || "http://localhost:8000";
 
@@ -141,6 +149,37 @@ const MainCategory = () => {
                     Used in URLs and category mapping.
                   </FormDescription>
 
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Filter Type */}
+            <FormField
+              control={form.control}
+              name="filterType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Filter Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select size filter type to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="apparel">Apparel Sizes (S, M, L...)</SelectItem>
+                      <SelectItem value="bedsheet">Bedsheet Sizes (Single, Double...)</SelectItem>
+                      <SelectItem value="footwear">Footwear Sizes (6, 7, 8...)</SelectItem>
+                      <SelectItem value="none">No Size Filter (None)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Determines what size options shoppers see on the category page.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

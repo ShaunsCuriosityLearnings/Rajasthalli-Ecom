@@ -11,6 +11,7 @@ model MainCategory {
   id         Int        @id @default(autoincrement())
   name       String
   slug       String     @unique
+  filterType String     @default("apparel")
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   categories Category[]
@@ -28,19 +29,20 @@ model Category {
 }
 
 model Product {
-  id               Int            @id @default(autoincrement())
-  name             String
-  shortDescription String
-  description      String
-  price            Decimal        @db.Decimal(10, 2)
-  sizes            String[]
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  id                   Int            @id @default(autoincrement())
+  name                 String
+  shortDescription     String
+  description          String
+  price                Decimal        @db.Decimal(10, 2)
+  sizes                String[]
+  isHomepageNewArrival Boolean        @default(false)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
 
-  categorySlug     String
-  category         Category       @relation(fields: [categorySlug], references: [slug])
+  categorySlug         String
+  category             Category       @relation(fields: [categorySlug], references: [slug])
 
-  images           ProductImages?
+  images               ProductImages?
 }
 
 model ProductImages {

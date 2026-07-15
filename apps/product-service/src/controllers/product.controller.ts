@@ -2,7 +2,7 @@ import { prisma, Prisma } from "@repo/productdb";
 import { Request, Response } from "express";
 
 export const createProduct = async (req: Request, res: Response) => {
-  const { images, ...productData } = req.body;
+  const { images, isHomepageNewArrival, ...productData } = req.body;
 
   if (!images) {
     return res.status(400).json({
@@ -23,6 +23,7 @@ export const createProduct = async (req: Request, res: Response) => {
   const product = await prisma.product.create({
     data: {
       ...productData,
+      isHomepageNewArrival: isHomepageNewArrival === true || isHomepageNewArrival === "true",
 
       images: {
         create: {
@@ -55,7 +56,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     });
   }
 
-  const { images, ...productData } = req.body;
+  const { images, isHomepageNewArrival, ...productData } = req.body;
 
   const updatedProduct = await prisma.product.update({
     where: {
@@ -63,6 +64,9 @@ export const updateProduct = async (req: Request, res: Response) => {
     },
     data: {
       ...productData,
+      ...(isHomepageNewArrival !== undefined && {
+        isHomepageNewArrival: isHomepageNewArrival === true || isHomepageNewArrival === "true",
+      }),
 
       ...(images && {
         images: {
@@ -139,7 +143,7 @@ export const getProduct = async (req: Request, res: Response) => {
 };
 
 export const getProducts = async (req: Request, res: Response) => {
-  const { sort, category, limit, search, size } = req.query;
+  const { sort, category, mainCategory, homepageNewArrivals, limit, search, size } = req.query;
 
   const orderBy = (() => {
     switch (sort) {
@@ -157,11 +161,21 @@ export const getProducts = async (req: Request, res: Response) => {
     }
   })();
 
-  const products = await prisma.product.findMany({
+  let products = await prisma.product.findMany({
     where: {
+      ...(homepageNewArrivals === "true" && {
+        isHomepageNewArrival: true,
+      }),
       ...(category && {
         category: {
           slug: String(category),
+        },
+      }),
+      ...(mainCategory && {
+        category: {
+          mainCategory: {
+            slug: String(mainCategory),
+          },
         },
       }),
       ...(size && {
@@ -199,6 +213,37 @@ export const getProducts = async (req: Request, res: Response) => {
     orderBy,
     take: limit ? Number(limit) : undefined,
   });
+
+  // Fallback: if homepageNewArrivals is requested but none are tagged, return the newest ones
+  if (homepageNewArrivals === "true" && products.length === 0) {
+    products = await prisma.product.findMany({
+      where: {
+        ...(category && {
+          category: {
+            slug: String(category),
+          },
+        }),
+        ...(mainCategory && {
+          category: {
+            mainCategory: {
+              slug: String(mainCategory),
+            },
+          },
+        }),
+        ...(size && {
+          sizes: {
+            has: String(size),
+          },
+        }),
+      },
+      include: {
+        images: true,
+        category: true,
+      },
+      orderBy: { createdAt: Prisma.SortOrder.desc },
+      take: limit ? Number(limit) : 10,
+    });
+  }
 
   res.status(200).json(products);
 };

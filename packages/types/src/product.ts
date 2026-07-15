@@ -8,12 +8,14 @@ export type ProductType = Omit<Product, "price" | "createdAt" | "updatedAt" | "c
   updatedAt?: Date;
   categorySlug?: string;
   category?: Category;
+  isHomepageNewArrival?: boolean;
 };
 
 export type ProductsType = ProductType[];
 
 export type MainCategoryType = MainCategory & {
   categories?: Category[];
+  filterType?: string;
 };
 
 export type CategoryType = Category & {
@@ -27,6 +29,7 @@ export const mainCategoryFormSchema = z.object({
   slug: z.string().min(1, {
     message: "Slug is required!",
   }),
+  filterType: z.string().optional(),
 });
 
 export type MainCategoryFormValues = z.infer<typeof mainCategoryFormSchema>;
@@ -63,6 +66,7 @@ export const productFormSchema = z.object({
     message: "Category is required!",
   }),
   sizes: z.array(z.string()),
+  isHomepageNewArrival: z.boolean().optional(),
   frontView: z.string().min(1, {
     message: "Front view image path is required!",
   }),
