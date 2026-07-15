@@ -8,7 +8,8 @@ const Filter = ({ mainCategory }: { mainCategory?: string }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [filterType, setFilterType] = useState<string>("apparel");
+  const isHomeDecor = mainCategory?.toLowerCase().includes("home") || mainCategory?.toLowerCase().includes("decor");
+  const [filterType, setFilterType] = useState<string>(isHomeDecor ? "bedsheet" : "apparel");
 
   useEffect(() => {
     if (!mainCategory) {
@@ -24,6 +25,11 @@ const Filter = ({ mainCategory }: { mainCategory?: string }) => {
           const currentMc = data.find((mc: any) => mc.slug === mainCategory);
           if (currentMc && currentMc.filterType) {
             setFilterType(currentMc.filterType);
+          } else if (currentMc) {
+            // Fallback for existing database records before filterType config is set
+            if (currentMc.slug.includes("home") || currentMc.slug.includes("decor") || currentMc.name.toLowerCase().includes("home") || currentMc.name.toLowerCase().includes("decor")) {
+              setFilterType("bedsheet");
+            }
           }
         }
       } catch (error) {
