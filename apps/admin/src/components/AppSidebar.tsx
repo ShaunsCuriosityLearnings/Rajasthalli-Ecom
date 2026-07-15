@@ -127,7 +127,7 @@ const AppSidebar = () => {
                 </Sheet>
               </SidebarMenuItem>
 
-              <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                 <Sheet>
                   <SheetTrigger asChild>
                     <SidebarMenuButton>
@@ -138,7 +138,7 @@ const AppSidebar = () => {
 
                   <BulkUploadProducts />
                 </Sheet>
-              </SidebarMenuItem>
+              </SidebarMenuItem> */}
 
               {/* MAIN CATEGORIES */}
               <SidebarMenuItem>
